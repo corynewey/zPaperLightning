@@ -1,0 +1,464 @@
+<!-- **************************************************************************************************
+     * Visualforce Name: zDocumentProperties
+     * Apex Controller Name: zDocumentPropertiesController
+     * Visualforce Component: zDocumentPropertiesMultiSelect_ltng
+     * Description: This page will be used to configure properties (Columns & DocTypes custom Names, Visibility, Order and D) zDocumntSet lighting component.
+     * Author: Prathyusha Vasireddy
+     * Date : 6/12/2017
+     *
+     * Modification Logs:
+     * ************************************************************************
+     * Developer                   Date                    Description
+     * ********************        *************           ********************
+     * Prathyusha Vasireddy        06/22/2017             Original Version
+     ************************************************************************************************** -->
+
+    <apex:page controller="zDocumentPropertiesController" standardStylesheets="false">
+    <apex:includeScript value="{!$Resource.jQuery_3_3_1}"/>
+    <link href="{!URLFOR($Resource.SLDS,'styles/salesforce-lightning-design-system-vf.css')}" rel="stylesheet" type="text/css" />
+    <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <style>
+      .slds-text-title .slds-truncate{
+          font-weight:bold;
+        }
+      .slds .multiSelectPicklistCell img{
+         background-color: #f4f6f9 !important;
+         border: 0px solid #d8dde6 !important;
+         width : 45px !important;
+      }
+      
+      .slds .messageText{
+          color: red;
+      }
+    </style>
+    <apex:form id="frm">         
+    <div class="slds">
+          <!-- LAYOUT GRID -->
+              <div calss="slds-container--large content">                  
+                 <!-- PAGE HEADER -->
+                 <div class="slds-page-header" role="banner">                    
+                      <div class="slds-grid">
+                          <!-- Design Layout Drop down Start --> 
+                              <div class="slds-col">                                    
+                                    <b> Select Layout: </b>
+                                    <apex:selectList styleClass="slds-input" value="{!selectedDesignLayout}" multiselect="false" size="1" style="width:40%">
+                                        <apex:actionSupport action="{!getZDocumentSetups}" event="onchange"/>
+                                        <apex:selectOptions value="{!designLayoutOptions}"/>                
+                                    </apex:selectList> &nbsp;&nbsp;&nbsp;
+                                    
+                                    <apex:commandLink title="Add New Design Layout" style="vertical-align: text-top;" action="{!setNewDesignLayout}" reRender="frm">  
+                                          <i class="fa fa-plus" aria-hidden="true" style="font-size:20px; color: #54698d;"></i>
+                                          <apex:param name="selectedProp" value="NewDesign" assignTo="{!selectedProperty}"/>
+                                    </apex:commandLink>
+                                    <apex:commandLink title="Edit Selected Design Layout" style="vertical-align: text-top;" action="{!getDesignLayout}" reRender="frm">  
+                                          <i class="fa fa-edit" aria-hidden="true" style="font-size:20px; color: #54698d;"></i>
+                                          <apex:param name="selectedProp" value="EditDesign" assignTo="{!selectedProperty}"/>
+                                    </apex:commandLink> &nbsp;
+                                    <apex:commandLink title="Delete Design Layout" style="vertical-align: text-top;"  action="{!deleteDesignLayout}" rerender="frm" status="stat">  
+									    <i class="fa fa-trash" style="font-size:20px;color:#cc181e;"></i>
+										<apex:param name="selectedProp" value="DeleteDesign" assignTo="{!selectedProperty}"/>
+									</apex:commandLink>&nbsp;&nbsp;
+                                    <apex:commandLink title="Export Layouts to static resource" style="vertical-align: text-top;"  action="{!exportDesignLayout}" rerender="frm" status="stat">
+									    <i class="fa fa-cloud-upload" style="font-size:20px;color:#54698d;"></i>
+										<apex:param name="selectedProp" value="ExportDesign" assignTo="{!selectedProperty}"/>
+									</apex:commandLink> &nbsp;
+                                    <apex:commandLink title="Import Layouts from static resource" style="vertical-align: text-top;margin-top:8px;"  action="{!importDesignLayout}" rerender="frm" status="stat">
+									    <i class="fa fa-cloud-download" style="font-size:20px;color:#54698d;"></i>
+										<apex:param name="selectedProp" value="ImportDesign" assignTo="{!selectedProperty}"/>
+									</apex:commandLink>
+                                     <br/> <br/>
+                                    <apex:outputLabel rendered="{!selectedDesignLayout != null && selectedDesignLayout != ''}"> <b>Selected Design Layout Id: </b> &nbsp;&nbsp; {!selectedDesignLayout}</apex:outputLabel>
+                              </div>
+                            <!-- Design Layout Drop down End --> 
+                            
+                            <!-- New Design Layout/ Update old  Design Layout action start -->  
+                              <div class="slds-col">
+                                    <apex:outputPanel rendered="{!OR(selectedProperty == 'NewDesign',selectedProperty == 'EditDesign')}">                               
+                                       <div class="slds-grid">
+                                          <div class="slds-col--padded" role="group">
+                                              <div class="slds-form-element">
+                                                 <label class="slds-form-element__label">New Design Layout Name:</label>
+                                                 <div class="slds-form-element__control">
+                                                        <apex:inputField styleClass="slds-input" value="{!DesignLayout.Name}"/>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="slds-col--padded" role="group">
+                                              <div class="slds-form-element">
+                                                 <label class="slds-form-element__label">Documents View Link URL:</label>
+                                                 <apex:inputField styleClass="slds-input" value="{!DesignLayout.Documents_ViewLink_URL__c}"/>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="slds-col--padded" role="group">
+                                              <div class="slds-form-element">                                                  
+                                                  <label class="slds-form-element__label">Documents View Link Name:</label>
+                                                  <div class="slds-form-element__control">
+                                                        <apex:inputField styleClass="slds-input" value="{!DesignLayout.Documents_ViewLink_Name__c}"/>
+                                                  </div>
+                                              </div>
+                                          </div> 
+                                       </div>
+                                        <div class="slds-grid">
+                                            <div class="slds-col--padded" role="group">
+                                                <!--<div class="slds-form-element">-->
+                                                <!--<label class="slds-form-element__label">Suppress Empty Entries:</label>-->
+                                                <!--<div class="slds-form-element__control">-->
+                                                <!--<apex:inputField styleClass="slds-input" value="{!DesignLayout.Suppress_Blank_Entries__c}"/>-->
+                                                <!--</div>                                                  -->
+                                                <!--</div>-->
+                                                <div class="slds-form-element">
+                                                    <label class="slds-checkbox">
+                                                        <apex:inputcheckbox id="isSuppressed" styleclass="slds-input" value="{!DesignLayout.Suppress_Blank_Entries__c}" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Suppress Empty Rows (No Document received for Type)</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   </apex:outputPanel>
+                               </div> <br/>
+                               
+                        </div>  <br/>
+                           <apex:outputPanel rendered="{!OR(selectedProperty == 'NewDesign',selectedProperty == 'EditDesign')}">    
+                                    <div class="slds-grid" style="margin-left:35%">
+                                        <div class="slds-col--padded" role="group">
+                                            <div class="slds-grid">
+                                                <div class="slds-col" role="group">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Action Buttons:</label>
+                                                        <apex:inputHidden id="actionButtonsJSON" value="{!actionButtonsJSON}"/>
+                                                        <div class="slds-form-element__control">
+                                                            <select id="actionButtonList" onchange="populateActionBtnFields(this);"
+                                                                    multiple="multiple"
+                                                                    style="width:220px;height:120px;"></select>
+                                                            <!--<apex:inputField styleClass="slds-input mulPick" value="{!DesignLayout.Document_ViewLink_URL_Parameters__c}"/>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col" style="margin-left:-23%;" role="group">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Button Label:</label>
+                                                        <div class="slds-form-element__control">
+                                                            <input type="text" id="actionBtnLabel" style="width:200px;"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Column Position:</label>
+                                                        <div class="slds-form-element__control">
+                                                            <select id="actionBtnPosition" style="width:200px;">
+                                                                <option value="First">First</option>
+                                                                <option value="Last">Last</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Event Name:</label>
+                                                        <div class="slds-form-element__control">
+                                                            <input type="text" id="actionBtnEvent" style="width:200px;"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Component Class:</label>
+                                                        <div class="slds-form-element__control">
+                                                            <input type="text" id="actionBtnComponent" style="width:200px;"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Show for Documents in Stage:</label>
+                                                        <div class="slds-form-element__control">
+                                                            <input type="text" id="actionBtnStages" style="width:200px;"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element" style="padding-top:6px;">
+                                                        <div class="slds-form-element__control">
+                                                            <input class="slds-button slds-button--brand"
+                                                                   type="button" id="actionBtnSave"
+                                                                   onclick="saveAction();"
+                                                                   value="Save Action" style="line-height:1.3em;width:200px;"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+<script type="text/javascript">
+    var actionBtnMap;
+    var newActionCount = 0;
+    $(document).ready(function() {
+        actionBtnMap = {};
+        var jqSafeActionButtonsID = '{!$Component.actionButtonsJSON}'.replace(/:/g,"\\:");
+        var btnList = JSON.parse($('#' + jqSafeActionButtonsID).val());
+        var optBuffer = '';
+        for (var i in btnList) {
+            if (btnList.hasOwnProperty(i)) {
+                actionBtnMap[btnList[i].Id] = btnList[i];
+                optBuffer += "<option value='" + btnList[i].ZPAPER5__Label__c + "'>" +  btnList[i].ZPAPER5__Label__c + "</option>";
+            }
+        }
+        $('#actionButtonList').html(optBuffer);
+    });
+
+    function populateActionBtnFields(ele) {
+        var $sel = $(ele);
+        var action = getActionByLabel($sel.val()[0]);
+        var $label = $('#actionBtnLabel');
+        var $position = $('#actionBtnPosition');
+        var $event = $('#actionBtnEvent');
+        var $component = $('#actionBtnComponent');
+        var $stages = $('#actionBtnStages');
+        $label.val('');
+        $position.val('');
+        $event.val('');
+        if (action) {
+            $label.val(action.ZPAPER5__Label__c);
+            $position.val(action.ZPAPER5__Column_Location__c);
+            $event.val(action.ZPAPER5__Button_Event_Name__c);
+            $component.val(action.ZPAPER5__Component__c);
+            $stages.val(action.ZPAPER5__Visible_In_Stages__c);
+        }
+    }
+
+    function saveAction() {
+        debugger;
+        var $label = $('#actionBtnLabel');
+        var $position = $('#actionBtnPosition');
+        var $event = $('#actionBtnEvent');
+        var $component = $('#actionBtnComponent');
+        var $stages = $('#actionBtnStages');
+        var label = $label.val();
+        var position = $position.val();
+        var event = $event.val();
+        var component = $component.val();
+        var stages = $stages.val();
+        $label.val('');
+        $position.val('');
+        $event.val('');
+        $component.val('');
+        $stages.val('');
+        if (!label || !position || (!event && !component)) {
+            alert("Please include values for label, position, and either event or component.");
+            return;
+        }
+        // Are we editing or creating new action?
+        var action = getActionByLabel(label);
+        if (!action) {
+            action = {};
+            actionBtnMap['dummyId_' + newActionCount++] = action;
+            $('#actionButtonList').append("<option value='" + label + "'>" + label + "</option>");
+        }
+        action.ZPAPER5__Label__c = label;
+        action.ZPAPER5__Component__c = component;
+        action.ZPAPER5__Column_Location__c = position;
+        action.ZPAPER5__Button_Event_Name__c = event;
+        action.ZPAPER5__Visible_In_Stages__c = stages;
+    }
+
+    function getActionByLabel(label) {
+        debugger;
+        for (var key in actionBtnMap) {
+            if (actionBtnMap.hasOwnProperty(key)) {
+                var action = actionBtnMap[key];
+                if (action.ZPAPER5__Label__c === label) {
+                    return action;
+                }
+            }
+        }
+        return null;
+    }
+
+    function buildActionButtonsJSON() {
+        var actions = [];
+        for (var key in actionBtnMap) {
+            if (actionBtnMap.hasOwnProperty(key)) {
+                actions.push(actionBtnMap[key]);
+            }
+        }
+        var jqSafeActionButtonsID = '{!$Component.actionButtonsJSON}'.replace(/:/g,"\\:");
+        $('#' + jqSafeActionButtonsID).val(JSON.stringify(actions));
+        return true;
+    }
+</script>
+                                        <div class="slds-col--padded" role="group">
+                                               <apex:commandButton value="Save" onClick="buildActionButtonsJSON();" styleClass="slds-button slds-button--brand" style="margin-top:27%" action="{!saveDesignLayout}" reRender="frm" status="stat"/>
+                                                <apex:commandButton value="Cancel" styleClass="slds-button slds-button--brand" style="margin-top:27%" rerender="frm">                                                        
+                                                    <apex:param name="selectedProp" value="" assignTo="{!selectedProperty}"/>
+                                                </apex:commandButton>
+                                        </div>
+                                    </div>                                                     
+                            </apex:outputPanel>                        
+                  </div>     
+                  <!-- New Design Layout/ Update old  Design Layout action end -->  
+                  
+                   
+                  <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--12-of-12 slds-large-size--12-of-12"> <apex:pageMessages /> </div> <br/><br/>
+                  
+                  <!-- / PAGE HEADER --> 
+                  <div class="slds-grid slds-wrap ">
+                             <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12">
+                                <!-- SLDS Card -->
+                                <div class="slds-card" style="height: 300px; overflow: auto">                             
+                                   <!-- Document Set  columns names table start--> 
+                                    <div class="slds-m-around--xx-small">
+                                        <span class="slds-text-heading--small "> Stage Names </span>
+										<apex:commandLink title="Refresh Columns" style="vertical-align: text-top;" action="{!refreshColumns}" reRender="frm" status="stat">  
+                                             <i class="fa fa-refresh" aria-hidden="true" style="font-size:20px;"></i>
+                                       </apex:commandLink>
+                                    </div>
+									
+                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" height="100%">
+                                      <thead>
+                                        <tr class="slds-text-title">
+                                          <th scope="col">
+                                            <div class="slds-truncate">Action</div>
+                                          </th>
+                                          <th scope="col">
+                                            <div class="slds-truncate">Actual Stage Name</div>
+                                          </th>
+                                          <th scope="col">
+                                            <div class="slds-truncate">New Stage Name</div>
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <apex:repeat value="{!zDocColumnsMap}" var="zDocProp" id="pgt">
+                                             <tr>
+                                              <td data-label="Action">
+                                                <div class="slds-truncate">
+                                                   <apex:outputPanel rendered="{!zDocProp == selectedProperty}">
+                                                       <apex:commandLink title="Cancel" style="vertical-align: text-top;" rerender="frm">                                                        
+                                                            <i class="fa fa-close" aria-hidden="true" style="font-size:18px; color: #54698d;"></i>
+                                                            <apex:param name="selectedProp" value="" assignTo="{!selectedProperty}"/>
+                                                       </apex:commandLink>  &nbsp; | &nbsp;
+                                                       <apex:commandLink title="Save" style="vertical-align: text-top;" action="{!updateColumnName}" reRender="frm" status="stat">  
+                                                            <i class="fa fa-save" aria-hidden="true" style="font-size:18px; color: #54698d;"></i>
+                                                       </apex:commandLink>                                                     
+                                                   </apex:outputPanel>
+                                                    
+												  <apex:outputPanel rendered="{!zDocProp != selectedProperty}">
+													   <apex:commandLink title="Edit Name" style="vertical-align: text-top;" action="{!editColumnName}" rerender="frm">  
+															<i class="fa fa-edit" style="font-size:18px;"></i>
+															<apex:param name="selectedProp" value="{!zDocProp}" assignTo="{!selectedProperty}"/>
+													   </apex:commandLink>   &nbsp; | &nbsp;
+													   <apex:commandLink title="Delete Name" style="vertical-align: text-top;" onclick="return confirm('Are you sure?');" action="{!deleteColumn}" rerender="frm" status="stat">  
+															<i class="fa fa-trash" style="font-size:18px;"></i>
+															<apex:param name="selectedProp" value="{!zDocProp}" assignTo="{!selectedProperty}"/>
+													   </apex:commandLink>
+												   </apex:outputPanel>
+
+                                                </div>
+                                              </td>
+                                              <td data-label="Actual Column Name">
+                                                <div class="slds-truncate">
+                                                   <apex:outputField value="{!zDocColumnsMap[zDocProp].ActualColumn_Name__c}"/>
+                                                </div>
+                                              </td>
+                                              <td data-label="New Column Name">
+                                                <div class="slds-truncate">
+                                                    <apex:inputField styleClass="slds-input" value="{!zDocumentSetup.Name}" rendered="{!zDocProp == selectedProperty}"/>
+                                                    <apex:outputField value="{!zDocColumnsMap[zDocProp].Name}" rendered="{!zDocProp != selectedProperty}"/>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                        </apex:repeat>                              
+                                    </tbody>
+                                   </table>
+								   
+                                </div>
+                                <!-- SLDS Card End-->            
+                            </div> 
+                             
+                             <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" >
+                                <!-- SLDS Card -->   
+                                <div class="slds-card">                    
+                                    <div class="slds-m-around--xx-small">
+                                        <span class="slds-text-heading--small "> Stages Visibility and  Sorting </span>
+                                    </div>
+                                    <div class="slds-box" style="background-color: #fff;">
+                                        <c:zDocumentPropertiesMultiSelect_ltng leftlabel="Available Columns" leftoption="{!availableZDocsClmns}" rightlabel="Selected Columns" rightoption="{!selectedZDocsClmns}" size="10" width="200px"/>
+                                        <div class="slds-button-group" role="group" style="margin-left:40%">
+                                            <apex:commandbutton styleClass="slds-button slds-button--brand" action="{!saveColumnProperties}" value="Save" reRender="frm" status="stat"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- SLDS Card End-->   
+                            </div>                         
+                 
+                      <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--12-of-12 slds-large-size--12-of-12"> </div> <br/>
+
+                 <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" >
+                     <!-- SLDS Card -->
+                     <div class="slds-card" style="height: 300px; overflow: auto">
+                    <!-- Document Set DocTypes names table start-->                      
+                        <div class="slds-m-around--xx-small">
+                            <span class="slds-text-heading--small "> Document Types </span>
+                        </div>
+                        
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer" height="100%">
+                          <thead>
+                            <tr class="slds-text-title">
+                              <th scope="col">
+                                <div class="slds-truncate">DocType Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                   <apex:commandLink title="Refresh Document Types" style="vertical-align: text-top;" action="{!refreshDocTypes}" reRender="frm" status="stat">  
+                                          <i class="fa fa-refresh" aria-hidden="true" style="font-size:20px;"></i>
+                                    </apex:commandLink>									
+                                </div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                           <apex:repeat value="{!zDocTypesMap}" var="zDocTypeProp">
+                            <tr>
+                              <td data-label="DocType Name">
+                                <div class="slds-truncate">
+                                    <apex:outputField value="{!zDocTypesMap[zDocTypeProp].Name}"/>
+                                </div>
+                              </td>
+                            </tr>
+                           </apex:repeat>
+                          </tbody>                    
+                        </table>
+                        <!-- Document Set DocTypes names table end-->                       
+                      </div>
+                       <!-- SLDS Card End--> 
+                 </div>
+                     
+                 <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" >                    
+                      <!-- SLDS Card -->
+                     <div class="slds-card">                    
+                         <div class="slds-m-around--xx-small">
+                            <span class="slds-text-heading--small "> DocType Visibility and Sorting </span>
+                        </div>
+                        <div class="slds-box" style="background-color: #fff;">
+                            <c:zDocumentPropertiesMultiSelect_ltng leftlabel="Available DocTypes" leftoption="{!availableZDocsTypes}" rightlabel="Selected DocTypes" rightoption="{!selectedZDocsTypes}" size="10" width="200px"/>
+                            <div class="slds-col--padded" role="group" style="margin-left:40%">
+                                <apex:commandButton styleClass="slds-button slds-button--brand" action="{!saveDocTypeProperties}" value="Save" reRender="frm" status="stat"/>
+                            </div>
+                        </div>
+                     </div>
+                     <!-- SLDS Card End-->
+                 </div>                  
+            </div>
+          </div>       
+          <!-- / LAYOUT GRID -->
+		  <apex:actionStatus onstart="showSpin()" onstop="hideSpin()" id="stat" />
+		  <div id="spinner" class="slds-spinner_container" style="display:none">
+			<div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+			  <span class="slds-assistive-text">Loading..</span>
+			  <div class="slds-spinner__dot-a"></div>
+			  <div class="slds-spinner__dot-b"></div>
+			</div>
+          </div>		  
+    </div>
+	<head>
+		<script>
+			function showSpin() {
+				document.getElementById("spinner").style.display = "block";
+			}
+			function hideSpin() {
+				ocument.getElementById("spinner").style.display = "none";
+			}
+		 </script>
+	 </head>
+    </apex:form>
+</apex:page>

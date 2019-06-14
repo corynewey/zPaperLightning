@@ -1,0 +1,21 @@
+<aura:component description="ZP_DocumentSetHeader">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="zPDocumentsObj" type="Object" access="public"/>
+    <aura:attribute name="actionIsFirst" type="Boolean" default="false" access="private"/>
+    <aura:attribute name="actionIsLast" type="Boolean" default="false" access="private"/>
+    <thead>
+        <tr>
+            <aura:if isTrue="{!v.actionIsFirst}" >
+                <!-- CRN180404 Adding column "Delete" or "Detach" button -->
+                <td>&nbsp;</td>
+            </aura:if>
+            <aura:iteration items="{!v.zPDocumentsObj.zDocStatusNew}" var="status">
+                <td class="slds-text" style="text-align:center;">{!status}</td>
+            </aura:iteration>
+            <aura:if isTrue="{!v.actionIsLast}" >
+                <!-- CRN180404 Adding column "Delete" or "Detach" button -->
+                <td>&nbsp;</td>
+            </aura:if>
+        </tr>
+    </thead>
+</aura:component>

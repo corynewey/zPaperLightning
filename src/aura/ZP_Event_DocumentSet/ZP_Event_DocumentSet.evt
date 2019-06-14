@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="ZP_Event_DocumentSet">
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="information" type="Object" />
+</aura:event>

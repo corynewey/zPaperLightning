@@ -1,0 +1,59 @@
+<apex:page standardController="Contact">
+ 
+    <apex:includeLightning />
+	<div id="HomeCompoent" />
+    
+ <script>
+    
+    var zServer="htt"+"ps://"+"Setup.zpaper4__zpro__c.zpaper4__server__c"; //ERS150708 security issues //ERS150812 fix this manaually
+    zServer="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}"; //ERS150812
+    if (zServer == ("htt"+"ps://")) {
+        zServer="htt"+"ps://"+"zp20.zpaper.com"; //ERS150606 trying to minimize setup
+    }
+        
+    function loadData() {   //TODO find a better way!  IE handles the zData scope differently using w() versus just src=
+        var aURL=zServer+"/kb/jsp/homeData.jsp?sfIds={!$CurrentPage.parameters.id},00Q1a000001woiE&mode=JSON&"+
+            "SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}";
+        loadScript(aURL);
+    }  
+    
+    
+    function w(s) {document.writeln(s);}
+    function loadScript(src) { //ERS150627
+        var sc=document.createElement("script");
+        sc.type="text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(sc);
+        sc.src=src;
+        if (1==0) alert("Loaded " + src);
+    }
+    if (typeof zData === "undefined" || zData=="") loadData();
+    
+    var rId = '{!Contact}';
+    if(rId) {
+    	$Lightning.use("c:HomeCompoent", function() {
+         $Lightning.createComponent("c:ZpaperLightningHome", 
+     { 
+         sessionId : "{!$Api.Session_ID}",
+         recordId : "{!Contact}"
+         
+     },
+         "HomeCompoent",
+         function(cmp) {
+             
+         });
+     });	
+    } else {
+    	$Lightning.use("c:HomeCompoent", function() {
+         $Lightning.createComponent("c:ZpaperLightningHome", 
+     { 
+         sessionId : "{!$Api.Session_ID}"
+     },
+         "HomeCompoent",
+         function(cmp) {
+             
+         });
+     });
+    }
+     
+ </script>
+</apex:page>

@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Force.com binding record for zPaper content
+from, pages and normal workflow fields
+picklist for doctype(program classification) and channel (fax,email,data,scan,file,SMS)
+parent stack lookup
+TODO: received, split who/when, attached who/when, data entry who/when</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ZPAPER__Birthdate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Birthdate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>zStacks</relationshipLabel>
+        <relationshipName>zStacks</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Channel__c</fullName>
+        <defaultValue>&quot;fax&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Channel</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>data</fullName>
+                    <default>false</default>
+                    <label>data</label>
+                </value>
+                <value>
+                    <fullName>email</fullName>
+                    <default>false</default>
+                    <label>email</label>
+                </value>
+                <value>
+                    <fullName>fax</fullName>
+                    <default>true</default>
+                    <label>fax</label>
+                </value>
+                <value>
+                    <fullName>file</fullName>
+                    <default>false</default>
+                    <label>file</label>
+                </value>
+                <value>
+                    <fullName>scan</fullName>
+                    <default>false</default>
+                    <label>scan</label>
+                </value>
+                <value>
+                    <fullName>SMS</fullName>
+                    <default>false</default>
+                    <label>SMS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Classification__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Classification</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Intake</fullName>
+                    <default>true</default>
+                    <label>Intake</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>Support</fullName>
+                    <default>false</default>
+                    <label>Support</label>
+                </value>
+                <value>
+                    <fullName>zCharta</fullName>
+                    <default>false</default>
+                    <label>zCharta</label>
+                </value>
+                <value>
+                    <fullName>zPapyrus</fullName>
+                    <default>false</default>
+                    <label>zPapyrus</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__FirstName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>FirstName</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__From__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>From</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Label__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Label</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__LastName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>LastName</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__NPI__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NPI</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Pages__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pages</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Splits or other operations create linkages.</description>
+        <externalId>false</externalId>
+        <label>zStack</label>
+        <referenceTo>ZPAPER__zStack__c</referenceTo>
+        <relationshipLabel>zStacks</relationshipLabel>
+        <relationshipName>zStacks</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Patient__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Patient</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>zStacks</relationshipLabel>
+        <relationshipName>zStacks</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Priority__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Normal</fullName>
+                    <default>false</default>
+                    <label>Normal</label>
+                </value>
+                <value>
+                    <fullName>Urgent</fullName>
+                    <default>false</default>
+                    <label>Urgent</label>
+                </value>
+                <value>
+                    <fullName>Weekend</fullName>
+                    <default>false</default>
+                    <label>Weekend</label>
+                </value>
+                <value>
+                    <fullName>After Hours</fullName>
+                    <default>false</default>
+                    <label>After Hours</label>
+                </value>
+                <value>
+                    <fullName>Slow</fullName>
+                    <default>false</default>
+                    <label>Slow</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Program_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Program Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Provider__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Provider</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>zStacks</relationshipLabel>
+        <relationshipName>zStacks</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Stage__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Lifecycle of a document from its beginning to end within a flow.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Not all documents go through all stages.</inlineHelpText>
+        <label>Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>ZPAPER__faxType__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Discovered</fullName>
+                    <default>false</default>
+                    <label>Discovered</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Received</fullName>
+                    <default>false</default>
+                    <label>Received</label>
+                </value>
+                <value>
+                    <fullName>Indexed</fullName>
+                    <default>false</default>
+                    <label>Indexed</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Processed</fullName>
+                    <default>false</default>
+                    <label>Processed</label>
+                </value>
+                <value>
+                    <fullName>Updated</fullName>
+                    <default>false</default>
+                    <label>Updated</label>
+                </value>
+                <value>
+                    <fullName>Verified</fullName>
+                    <default>false</default>
+                    <label>Verified</label>
+                </value>
+                <value>
+                    <fullName>Generated</fullName>
+                    <default>false</default>
+                    <label>Generated</label>
+                </value>
+                <value>
+                    <fullName>Reviewed</fullName>
+                    <default>false</default>
+                    <label>Reviewed</label>
+                </value>
+                <value>
+                    <fullName>Delivered</fullName>
+                    <default>false</default>
+                    <label>Delivered</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+                <value>
+                    <fullName>Archived</fullName>
+                    <default>false</default>
+                    <label>Archived</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Incoming Status</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__Triage_View__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://&quot;+$Setup.ZPAPER__zpaper__c.ZPAPER__server__c + &quot;/kb/jsp/console.jsp?dbID=&quot;+ ZPAPER__receivedId__c &amp; &quot;&amp;SFserver=&quot; &amp; $Api.Partner_Server_URL_310 &amp; &quot;&amp;SFsession=&quot; &amp; $Api.Session_ID, &quot;Triage&quot;,&quot;zStackTriage&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Triage View</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__View__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://&quot;+$Setup.ZPAPER__zpaper__c.ZPAPER__server__c + &quot;/kb/jsp/SF_find.jsp?go=SF_files.jsp&amp;dbID=&quot;+ ZPAPER__receivedId__c &amp; &quot;&amp;SFserver=&quot; &amp; $Api.Partner_Server_URL_310 &amp; &quot;&amp;SFsession=&quot; &amp; $Api.Session_ID, &quot;View&quot;,&quot;zStack&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>View</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__faxAgain__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Send Again</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__faxType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>ZPAPER__Classification__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ENRL:Enrollment</fullName>
+                    <default>true</default>
+                    <label>ENRL:Enrollment</label>
+                </value>
+                <value>
+                    <fullName>MIF:Missing Info</fullName>
+                    <default>false</default>
+                    <label>MIF:Missing Info</label>
+                </value>
+                <value>
+                    <fullName>PAF:Patient Authorization</fullName>
+                    <default>false</default>
+                    <label>PAF:Patient Authorization</label>
+                </value>
+                <value>
+                    <fullName>POI:Proof of Insurance</fullName>
+                    <default>false</default>
+                    <label>POI:Proof of Insurance</label>
+                </value>
+                <value>
+                    <fullName>FIN:Financial Info</fullName>
+                    <default>false</default>
+                    <label>FIN:Financial Info</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Intake</controllingFieldValue>
+                <controllingFieldValue>zCharta</controllingFieldValue>
+                <valueName>ENRL:Enrollment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Intake</controllingFieldValue>
+                <controllingFieldValue>zCharta</controllingFieldValue>
+                <valueName>MIF:Missing Info</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Intake</controllingFieldValue>
+                <controllingFieldValue>zCharta</controllingFieldValue>
+                <controllingFieldValue>zPapyrus</controllingFieldValue>
+                <valueName>PAF:Patient Authorization</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Intake</controllingFieldValue>
+                <controllingFieldValue>zPapyrus</controllingFieldValue>
+                <valueName>POI:Proof of Insurance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Intake</controllingFieldValue>
+                <controllingFieldValue>zPapyrus</controllingFieldValue>
+                <valueName>FIN:Financial Info</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__fromPages__c</fullName>
+        <deprecated>false</deprecated>
+        <description>describes split and rotation</description>
+        <externalId>false</externalId>
+        <label>From Pages</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__latestFax__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Received At</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__newFax__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>New Incoming</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__outboundFaxTemplate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Outbound Template</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__producedId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>zPaper ID for most recent activity</description>
+        <externalId>false</externalId>
+        <label>Produced ID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__receivedId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>zPaper database ID</description>
+        <externalId>false</externalId>
+        <label>Received ID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sendFaxStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <description>(deprecated)</description>
+        <externalId>false</externalId>
+        <label>Status (deprecated)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxAt__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sent At</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sent Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxTo__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sent To</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFax__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sent</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__triageURL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Using the whole SSO data causes the SessionID to be split up and not work. Home component must be used to create an existing zPaper session. 
+
+&quot;https://&quot;+$Setup.ZPAPER__zpaper__c.ZPAPER__server__c + &quot;/kb/jsp/console.jsp?dbID=&quot;+ ZPAPER__receivedId__c +&quot;&amp;SFserver=&quot;+ left($Api.Partner_Server_URL_310,find(&quot;/&quot;,$Api.Partner_Server_URL_310,10))+&quot;&amp;SFsession=&quot;+ $Api.Session_ID</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://&quot;+$Setup.ZPAPER__zpaper__c.ZPAPER__server__c + &quot;/kb/jsp/console.jsp?dbID=&quot;+ ZPAPER__receivedId__c &amp; &quot;&amp;SFserver=&quot; &amp; $Api.Partner_Server_URL_310 &amp; &quot;&amp;SFsession=&quot; &amp; $Api.Session_ID, &quot;Triage&quot;,&quot;Stack&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Triage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>zStack</label>
+    <listViews>
+        <fullName>ZPAPER__All</fullName>
+        <columns>ZPAPER__triageURL__c</columns>
+        <columns>ZPAPER__Status__c</columns>
+        <columns>ZPAPER__Priority__c</columns>
+        <columns>ZPAPER__Channel__c</columns>
+        <columns>ZPAPER__Pages__c</columns>
+        <columns>ZPAPER__faxType__c</columns>
+        <columns>ZPAPER__From__c</columns>
+        <columns>ZPAPER__Provider__c</columns>
+        <columns>ZPAPER__Patient__c</columns>
+        <columns>ZPAPER__Case__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>ZPAPER__latestFax__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ZPAPER__Status__c</field>
+            <operation>notEqual</operation>
+            <value>Complete</value>
+        </filters>
+        <label>All Not Completed</label>
+    </listViews>
+    <listViews>
+        <fullName>ZPAPER__All_Completed</fullName>
+        <columns>ZPAPER__triageURL__c</columns>
+        <columns>ZPAPER__Status__c</columns>
+        <columns>ZPAPER__Priority__c</columns>
+        <columns>ZPAPER__Channel__c</columns>
+        <columns>ZPAPER__Pages__c</columns>
+        <columns>ZPAPER__faxType__c</columns>
+        <columns>ZPAPER__From__c</columns>
+        <columns>ZPAPER__Provider__c</columns>
+        <columns>ZPAPER__Patient__c</columns>
+        <columns>ZPAPER__Case__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>ZPAPER__latestFax__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ZPAPER__Status__c</field>
+            <operation>contains</operation>
+            <value>Complete</value>
+        </filters>
+        <label>All Completed</label>
+    </listViews>
+    <listViews>
+        <fullName>ZPAPER__Intake_for_Triage</fullName>
+        <columns>ZPAPER__triageURL__c</columns>
+        <columns>ZPAPER__Status__c</columns>
+        <columns>ZPAPER__Priority__c</columns>
+        <columns>ZPAPER__Channel__c</columns>
+        <columns>ZPAPER__Pages__c</columns>
+        <columns>ZPAPER__faxType__c</columns>
+        <columns>ZPAPER__From__c</columns>
+        <columns>ZPAPER__Provider__c</columns>
+        <columns>ZPAPER__Patient__c</columns>
+        <columns>ZPAPER__Case__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>ZPAPER__latestFax__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ZPAPER__Status__c</field>
+            <operation>notEqual</operation>
+            <value>Complete</value>
+        </filters>
+        <label>Intake for Triage</label>
+    </listViews>
+    <listViews>
+        <fullName>ZPAPER__zIntake</fullName>
+        <columns>NAME</columns>
+        <columns>ZPAPER__sendFaxStatus__c</columns>
+        <columns>ZPAPER__Channel__c</columns>
+        <columns>ZPAPER__Pages__c</columns>
+        <columns>ZPAPER__faxType__c</columns>
+        <columns>ZPAPER__Patient__c</columns>
+        <columns>ZPAPER__Case__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>ZPAPER__Priority__c</columns>
+        <columns>ZPAPER__latestFax__c</columns>
+        <columns>ZPAPER__From__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ZPAPER__sendFaxStatus__c</field>
+            <operation>notEqual</operation>
+            <value>Complete</value>
+        </filters>
+        <label>Intake</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{00000000}</displayFormat>
+        <label>zStack Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>zStacks</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>ZPAPER__Complete</fullName>
+        <availability>online</availability>
+        <description>Keep a list view of zStacks up to date</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Complete</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)} //adds the proper code for inclusion of AJAX toolkit 
+
+
+var records = {!GETRECORDIDS($ObjectType.ZPAPER__zStack__c)};
+var sfType=&quot;ZPAPER__zStack__c&quot;;
+var kbHost = &quot;https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}&quot;;
+
+if (records[0] == null) { //if the button was clicked but there was no record selected 
+  alert(&quot;Please select at least one record to update.&quot;); //alert the user that they didn&apos;t make a selection 
+} else { //otherwise, there was a record selection 
+  var ids=records.toString(); 
+  ids=ids.replace(/,/g,&quot;&apos;,&apos;&quot;); 
+  var q=&quot;Select o.Id From &quot;+sfType+&quot; o WHERE o.Id in (&apos;&quot; + ids +&quot;&apos;)&quot;; //ERS170724 can not edit the Name so do NOT ask for it
+  //alert(q); 
+  var result = sforce.connection.query(q); 
+  var opps = result.getArray(&quot;records&quot;); 
+  //alert(&quot;found &quot;+opps.length); 
+  var worked=0;
+  if (1==1) { 
+    for (var a=0; a&lt;opps.length; a++) { //for all records 
+      var anId = opps[a].Id; 
+      opps[a].ZPAPER__Status__c=&quot;Complete&quot;; 
+      //alert(&quot;updating &quot;+anId); 
+    }
+    var saveResult = sforce.connection.update(opps); 
+    if ((saveResult+&quot;&quot;).indexOf(&quot;success:&apos;true&apos;&quot;)!=-1) worked++;
+      else alert(saveResult);
+    alert(&quot;Updated records.  Refresh the view.&quot;);
+  }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__Unlock</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Unlock</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)} //adds the proper code for inclusion of AJAX toolkit 
+
+
+var records = {!GETRECORDIDS($ObjectType.ZPAPER__zStack__c)}; 
+var sfType=&quot;ZPAPER__zStack__c&quot;; 
+var kbHost = &quot;https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}&quot;; 
+
+if (records[0] == null) { //if the button was clicked but there was no record selected 
+alert(&quot;Please select at least one record to update.&quot;); //alert the user that they didn&apos;t make a selection 
+} else { //otherwise, there was a record selection 
+var ids=records.toString(); 
+ids=ids.replace(/,/g,&quot;&apos;,&apos;&quot;); 
+var q=&quot;Select o.Id From &quot;+sfType+&quot; o WHERE o.Id in (&apos;&quot; + ids +&quot;&apos;)&quot;; //ERS170724 can not edit the Name so do NOT ask for it 
+//alert(q); 
+var result = sforce.connection.query(q); 
+var opps = result.getArray(&quot;records&quot;); 
+//alert(&quot;found &quot;+opps.length); 
+var worked=0; 
+if (1==1) { 
+for (var a=0; a&lt;opps.length; a++) { //for all records 
+var anId = opps[a].Id; 
+opps[a].ZPAPER__Status__c=&quot;Active&quot;; 
+//opps[a].Triage_Status__c=&quot;Active&quot;; //ERS170727 
+//alert(&quot;updating &quot;+anId); 
+} 
+var saveResult = sforce.connection.update(opps); 
+if ((saveResult+&quot;&quot;).indexOf(&quot;success:&apos;true&apos;&quot;)!=-1) worked++; 
+else alert(saveResult); 
+alert(&quot;Updated records. Refresh the view.&quot;); 
+} 
+}</url>
+    </webLinks>
+</CustomObject>

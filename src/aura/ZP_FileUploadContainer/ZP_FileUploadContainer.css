@@ -1,0 +1,17 @@
+/**
+ * Created by User on 8/29/2018.
+ */
+.THIS .vfFrame {
+    border: 1px dotted #000;
+}
+.THIS .slds-form-element__label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: black;
+}
+.THIS .errorMsg {
+    background-color: #ff7774;
+    color: white;
+    font-weight: bold;
+    border-color: red;
+}

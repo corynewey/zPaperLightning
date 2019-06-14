@@ -1,0 +1,5 @@
+<design:component label="zDocument Set">
+    <design:attribute name="DesignLayout" label="Design Layout Name"  description="Please provide the applicable Design Layout Id. You will get Design Layout Name from zDocument Properties Page"/>
+    <design:attribute name="VScrolling" label="Vertical Scrolling" datasource="Yes,No" description="Please select vertical scrolling"/>
+    <design:attribute name="zheight" default="235" label="Height" description="Please specify the Height(Ex: 250)"/>
+</design:component>

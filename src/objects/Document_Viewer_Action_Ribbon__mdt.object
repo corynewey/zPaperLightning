@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Settings for buttons in the Document Viewer Ribbon</description>
+    <fields>
+        <fullName>ZP_Action__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>ZP_Action</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZP_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Active</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ZP_Component__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Component</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZP_Document_Record_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of the Salesforce Record Type that should be associated with this action.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Document Record Type</label>
+        <length>128</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZP_Icon_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The name of the Lightning Icon as defined in the Salesforce Lightning Design System. For example: standard-lead.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Icon Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZP_Ordinal__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Order in which the action icon should be displayed in the Document Action Ribbon.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Ordinal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZP_Tooltip__c</fullName>
+        <deprecated>false</deprecated>
+        <description>API name of the &apos;custom label&apos; for the action icon that should be displayed as a tool tip for the icon.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Tooltip</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Document Viewer Action Ribbon Setting</label>
+    <listViews>
+        <fullName>All_Fields</fullName>
+        <columns>ZP_Active__c</columns>
+        <columns>MasterLabel</columns>
+        <columns>ZP_Action__c</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>IsProtected</columns>
+        <columns>ZP_Ordinal__c</columns>
+        <columns>ZP_Component__c</columns>
+        <columns>ZP_Document_Record_Type__c</columns>
+        <columns>ZP_Icon_Name__c</columns>
+        <columns>ZP_Tooltip__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Fields</label>
+    </listViews>
+    <pluralLabel>Document Viewer Action Ribbon Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

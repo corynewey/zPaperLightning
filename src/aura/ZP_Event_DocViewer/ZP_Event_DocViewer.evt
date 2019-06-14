@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="ZP_Event_DocViewer" access="global">
+    <aura:attribute name="targetDocViewer" type="String" access="global"/>
+    <aura:attribute name="operation" type="String" access="global"/>
+    <aura:attribute name="recId" type="Id" access="global"/>
+    <aura:attribute name="additionalInfo" type="Object" access="global"/>
+</aura:event>

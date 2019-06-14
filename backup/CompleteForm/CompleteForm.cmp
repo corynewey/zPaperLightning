@@ -1,0 +1,120 @@
+<!-- **************************************************************************************************
+     * Lighting Component Name: CompleteForm
+     * Apex Controller Name: CompleteFormController
+     * Description: This component using to displaying the CompleteFormController for associated record (Eg: Case)             
+     * Author: Prathyusha Vasireddy
+     * Date : 5/1/2017
+     *
+     * Modification Logs:
+     * ************************************************************************
+     * Developer                   Date                    Description
+     * ********************        *************           ********************
+     * Prathyusha Vasireddy	        06/15/2017             Original Version
+     ************************************************************************************************** -->
+
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" controller="CompleteFormController">
+    <!-- Invoking and Initializing the JS controller doInit action -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<!-- Capturing the current page recordId -->
+    <aura:attribute name="recordId" type="Id" />
+	<!-- Holding the Complete Form response --> 
+    <aura:attribute name="zFormsResponse" type="Object" />
+    <aura:attribute name="stages" type="String[]" default="Any,Open,Closed,Closed,Closed Won"/>    
+    <!-- Capturing the Button and Section names --> 
+    <aura:attribute name="Button1" type="String" default="Produce Form" access="global"/>
+    <aura:attribute name="Button2" type="string" default="Send Form" access="global"/>
+    <aura:attribute name="Button3" type="string" default="Print Form" access="global"/>
+    <aura:attribute name="Section1" type="string" default="Preview and Send" access="global"/>
+    <aura:attribute name="Section2" type="string" default="Data Capture" access="global"/>
+    <aura:attribute name="Section3" type="string" default="Coversheet" access="global"/>
+    <!--<aura:attribute name="Section1" type="string" default="" access="global"/>-->
+    <!--<aura:attribute name="Section2" type="string" default="" access="global"/>-->
+    <!--<aura:attribute name="Section3" type="string" default="" access="global"/>-->
+    <!-- CRN170524 Adding filtering capability to fill-in the various sections -->
+    <aura:attribute name="Section1Filter" type="string" default="{@field@:@type@,@op@:@eq@,@testValue@:@Fax@}" access="global"/>
+    <aura:attribute name="Section2Filter" type="string" default="{@field@:@type@,@op@:@eq@,@testValue@:@HTML@}" access="global"/>
+    <aura:attribute name="Section3Filter" type="string" default="{@field@:@type@,@op@:@eq@,@testValue@:@Coversheet@}" access="global"/>
+    <!--<aura:attribute name="Section1Filter" type="string" default="{field:type,op:eq,testValue:Fax}" access="global"/>-->
+    <!--<aura:attribute name="Section2Filter" type="string" default="{field:type,op:eq,testValue:HTML}" access="global"/>-->
+    <!--<aura:attribute name="Section3Filter" type="string" default="{field:type,op:eq,testValue:Coversheet}" access="global"/>-->
+
+    <div>
+        <b>Select a form to preview </b><br/><br/>
+        <b>{!v.Section1}</b>
+        <!-- CRN170524 - Cleaned up the fieldset and div tags -->
+        <fieldset class="slds-form-element">
+            <div class="slds-form-element__control" id="sect1Container">
+                <span class="slds-radio">
+                        <input type="radio" id="Master" class="zOption" name="options" onchange="{!c.getFormImage}"/>
+                        <label class="slds-radio__label" for="Master">
+                           <span class="slds-radio&#45;&#45;faux"></span>
+                           <span class="slds-form-element__label">Master Provider Referral Form 020416</span>
+                        </label>
+                </span> <br/><br/>
+
+                <span class="slds-radio">
+                    <input type="radio" id="zPapyrus" class="zOption" name="options" onchange="{!c.getFormImage}" />
+                    <label class="slds-radio__label" for="zPapyrus">
+                        <span class="slds-radio&#45;&#45;faux"></span>
+                        <span class="slds-form-element__label">zPapyrus Enrollment Form SRF-SMN 2017ZP</span>
+                    </label>
+                </span>
+            </div>
+        </fieldset>
+        <br/> <br/>
+        <b>{!v.Section2}</b> <br/><br/>
+        <fieldset class="slds-form-element">
+            <div class="slds-form-element__control" id="sect2Container">
+                <!--None found.-->
+            </div>
+        </fieldset>
+        <br/><br/>
+        <b>{!v.Section3}</b> <br/><br/>
+        <fieldset class="slds-form-element">
+            <div class="slds-form-element__control" id="sect3Container">
+                <span class="slds-radio">
+                    <input type="radio" id="AZapplication" class="zOption" name="options" onchange="{!c.getFormImage}"/>
+                    <label class="slds-radio__label" for="AZapplication">
+                        <span class="slds-radio&#45;&#45;faux"></span>
+                        <span class="slds-form-element__label">AZapplication_blackZPUpdated</span>
+                    </label>
+                </span>
+            </div>
+            <!-- CRN170524 Debug textarea to view the document list json -->
+            <br/>
+            zForms JSON <br/>
+            <textarea id="debugTA"></textarea>
+        </fieldset>
+
+    </div>
+    
+    <div >
+        <!-- modal body starts here -->
+        <div tabindex="-1" aria-labelledby="header43" aria-hidden="false" id="newClientSectionId" role="dialog" class="slds-modal slds-fade-in-open slds-modal--large" style="display:none;">
+            <div class="slds-backdrop slds-backdrop--open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.hideModal}">X</button>  
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header43" class="slds-text-heading--medium">Complete Form</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div>
+                            <img id = "zImg" style="display:none;"/>
+                            <iframe id = "zPDF" width="1100" height="600" style="display:none;" />
+                        </div>
+                    </div>
+                    
+                    <div class="slds-modal__footer">
+                        <lightning:button aura:id="Produce" variant="brand" label="{!v.Button1}" onclick="{!c.getProduceForm}" />
+                        <lightning:button aura:id="Send" variant="brand" label="{!v.Button2}" onclick="{!c.getSendForm}" />
+                        <lightning:button aura:id="Print" variant="brand" label="{!v.Button3}" onclick="{!c.getPrintForm}" />
+                        <button class="slds-button slds-button--brand" onclick="{!c.hideModal}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

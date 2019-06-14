@@ -1,0 +1,288 @@
+<apex:component controller="zLDSDocumentSetController" access="global">
+    <apex:includeScript value="/support/console/40.0/integration.js" />
+    <apex:attribute name="zLayoutId"
+                    assignTo="{!layoutId}"
+                    description="This is the layout ID"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:attribute name="zLayoutName"
+                    assignTo="{!layoutName}"
+                    description="This is the layout Name"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:attribute name="zZpaperServer"
+                    assignTo="{!zpaperServer}"
+                    description="This is the zPaper Server host name"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:attribute name="zSFId"
+                    assignTo="{!sfId}"
+                    description="This is the Id of the Case Record"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:attribute name="zSFSErver"
+                    assignTo="{!sfServer}"
+                    description="This is the Salesforce server host"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:attribute name="zSFSession"
+                    assignTo="{!sfSession}"
+                    description="This is the Salesforce session Id"
+                    type="String" access="global"
+                    required="false"/>
+    <apex:includeScript value="/support/console/40.0/integration.js"/>
+    <style>
+        td {
+            font-size:8pt;
+        }
+
+        th.rotate > div > span {
+            font-size:8pt;
+        }
+
+        th.rotate0 > div > span {
+            -ms-transform:rotate(315deg);
+            -moz-transform:rotate(315deg);
+            -webkit-transform:rotate(315deg);
+            -o-transform:rotate(315deg);
+            transform:rotate(315deg);
+            text-align:left;
+            display:block;
+        }
+    </style>
+    <!-- script src="https://demo.zpaper.com/kb/jsp/tableXMLSearch.jsp?sfIds=!ZPAPER3__Referral__c.Id,!Account.Id&mode=JSON&fields=label,ID,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&zPaper=1220&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script -->
+    <script>
+        var layoutString = '{!layoutJSON}';
+        //    alert(layoutString);
+        var layoutJSON = JSON.parse(layoutString);
+        var completeFormsURL = "https://{!zpaperServer}/kb/jsp/SF_find.jsp?go=formList.jsp&sfIDs={!sfId}&SFserver={!sfServer}&SFsession={!sfSession}";
+
+        debugger;
+
+        function refreshIFrame() {
+            var curURL = document.location.href;
+            // alert("@@@ curURL = " + curURL);
+            curURL += "&curTime=" + new Date().getDate();
+            // alert("curURL NOW: " + curURL");
+            document.location.href = curURL;
+        }
+
+        function writeRow(f, mode, viewLinkName, viewLinkURL, viewLinkParms, zTypesMap, zColumnsMap) {
+//  var tdStyles = "box-sizing:border-box;padding-left:0.33rem;color:rgb(0,112,210);position:relative;border-bottom:1px solid rgb(216,221,230);" +
+            var tdStyles = "box-sizing:border-box;padding-left:0.33rem;color:black;position:relative;border-bottom:1px solid rgb(216,221,230);" +
+                    "font-weight:normal;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;font-size:0.75rem;" +
+                    "vertical-align:middle;line-height:2.5;border-collapse:collapse;";
+            var tdStylesBlck = "box-sizing:border-box;padding-left:0.33rem;color:black;position:relative;border-bottom:1px solid rgb(216,221,230);" +
+                    "font-weight:normal;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;font-size:0.75rem;" +
+                    "vertical-align:middle;line-height:2.5;border-collapse:collapse;";
+
+            if (!mode) mode = "view";
+            var dt = unescape(f.X_docType) + "";
+            if ((dt + "") == "&nbsp;" || dt.indexOf("&") == 0) dt = ""; //alert(dt);
+            if (f.BATES.indexOf("_Data") > -1) dt = "form"; //ERS161003
+            document.write("<tr class='zpRow'>");
+            var i = 0;
+            //alert(f.ID);
+            f.label = f.label.replace("{!Id}", "ID").replace("00D41000000FuMC", "sfOrg"); //ERS161003
+            if (f.label.indexOf("@") > -1) {
+                f.label = "sfID@" + f.label.substring(1 + f.label.indexOf("@"));
+            }
+            window.console.log("@@@ f.View = " + f.View);
+//            document.write("<td style='" + tdStyles + "'>" + f.View.replace(">View", " class='zpLink' style='text-decoration:none;color:rgb(0,112,210);'>View") + " - " + f.label + "</td><td style='" + tdStyles + "'>" + dt + "</td>");
+            for (i = 0; i < states.length; i++) {
+                var curState = states[i];
+                var check = "";
+                var colspan = 1;
+                if (0 === i || (i + 1) === states.length) { colspan = 2; }
+                window.console.log("Displaying state: " + curState);
+                if ("Form" === curState) {
+/*
+						 var onclickHandler = "sforce.console.getEnclosingPrimaryTabId(function(result){" +
+							" sforce.console.openSubtab(result.id, " + zfile.View + ", true);" +
+							"} );";
+
+ */
+                    //CRN170830 If this is running in console, open the view up in a subtab.
+                    var linkURL;
+                    linkURL = viewLinkURL && viewLinkURL.length > 0 ?
+                            "<a href='" + viewLinkURL + "' class='zpLink' style='text-decoration:none;color:rgb(0,112,210);'>View</a>" :
+                            f.View.replace("'>View", "&SFserver={!sfServer}&SFsession={!sfSession}' class='zpLink' style='text-decoration:none;color:rgb(0,112,210);'>View");
+                    if (typeof sforce !== 'undefined' && typeof sforce.console !== 'undefined' && typeof sforce.console.getEnclosingPrimaryTabId !== 'undefined') {
+                        var idxBegin = linkURL.indexOf(" href='");
+                        var hrefCloser = "'";
+                        if (idxBegin < 0) {
+                            idxBegin = linkURL.indexOf(" href=\"");
+                            hrefCloser = '"';
+                        }
+                        if (idxBegin > 0) {
+                            idxBegin += " href='".length;
+                            var idxEnd = linkURL.indexOf(hrefCloser, idxBegin);
+                            if (idxEnd > idxBegin) {
+                                var href = linkURL.substring(idxBegin, idxEnd);
+                                var onclickHandler = "sforce.console.getEnclosingPrimaryTabId(function(result){" +
+                                        " sforce.console.openSubtab(result.id, \"" + href + "\", true);" +
+                                        "} );";
+                                linkURL = linkURL.replace(/ href=".*"/, "href='#' onclick='" + onclickHandler + "' ");
+                            }
+                        }
+                    }
+                    if (viewLinkName) {
+                        //CRN190107 Case #54338 Handle file.label replacement
+                        if (viewLinkName.indexOf("file.label") > 0) {
+                            viewLinkName = f.label;
+                        }
+                    }
+                    linkURL = viewLinkName && viewLinkName.length > 0 ? linkURL.replace(">View<", ">" + viewLinkName + "<") : linkURL + " - " + f.label;
+                    // alert("VIEW LINK URL: " + linkURL);
+                    window.console.log("VIEW LINK URL: " + linkURL);
+                    document.write("<td colspan='" + colspan + "' style='" + tdStyles + "'>" + linkURL + "</td>");
+                }
+                else if ("Type" === curState) {
+                    document.write("<td colspan='" + colspan + "' style='" + tdStyles +"'>" + f.X_docType + "</td>");
+                }
+                else if ("Updated Date" === curState) {
+                    var modDate = Date(f.modified); //"modified" : "2015-03-21 20:49:36.0",
+                    document.write("<td colspan='" + colspan + "' style='" + tdStyles + "'>" + modDate.toLocaleString().substring(0, 21) + "</td>");
+                }
+                else {
+                    if (f.X_reviews.indexOf(curState + " by") > -1) check = " checked title=\"" + f.X_reviews + "\" ";
+                    document.write("<td colspan='" + colspan + "' style='" + tdStyles +
+                            "padding-left:22px;'><input type='checkbox' readOnly='readOnly' onclick='return false' " + check + " id='cb" + curState + "'></td>"); //ERS150321 readOnly, return false
+                }
+            }
+            var d = Date(f.modified); //"modified" : "2015-03-21 20:49:36.0",
+            if (mode == "missing") d = "&nbsp;"; //ERS150323
+            else d = f.modified.substring(0, 16); //ERS150323 TODO use the Date()
+            if (1 == 0 || dt == "") {//ERS150321 form with BATES like APP_Form
+                var stillMissing = types.split(","); //ERS150322 stillMissing is really misnamed since there can be more than one APP per record
+                for (i = 0; i < stillMissing.length; i++) {
+                    if (stillMissing[i] != "" && f.BATES.indexOf(stillMissing[i].replace("*", "") + "_Form") > -1) {
+                        dt = stillMissing[i].replace("*", "");
+                        i = 100;
+                    }
+                }
+                f.X_docType = dt;
+                //alert("'"+f.X_docType +"' BATES="+f.BATES + " from "+ missingTypes);
+            }
+            if (f.BATES.indexOf("_Form") > -1) {
+                var la = f.label;
+                la = la.substring(1 + la.indexOf("-"), la.indexOf("_"));
+                f.label = la;
+            }
+            var idxEnd = f.View.lastIndexOf('>View');
+            if (idxEnd > 0) {
+                f.View = f.View.substring(0, idxEnd) + " style='color: rgb(0, 112, 210);'" + f.View.substring(idxEnd);
+            }
+//  document.write("<td style='"+tdStyles+"'>"+dt+"</td><td style='"+tdStyles+"'>"+d.toLocaleString().substring(0,21)+"</td><td style='"+tdStyles+"'>"+f.View+" - "+f.label+"</td></tr>");
+//            document.write("<td style='" + tdStyles + "'>" + d.toLocaleString().substring(0, 21) + "</td>");
+            if (dt != "" && mode != "missing") missingTypes = missingTypes.replace(dt + "*,", "").replace(dt + ",", "");
+        }
+
+        var recordTypes = zFiles.crmTypes.split(",");
+        if (!thisType) thisType = "Case:500"; //ERS141115 TODO get from SF //ERS150321 define on VF page
+        for (i in recordTypes) {
+            if (recordTypes[i].indexOf(":" + zFiles.sfId.substring(0, 3)) != -1) thisType = recordTypes[i].replace("ZPAPER3", "").replace("__c", "").replace("__", "");
+        }
+        thisType = thisType.substring(0, thisType.indexOf(":"));
+        //alert("thisType="+thisType);
+
+        var allTypes = zFiles.docTypes.split(",");
+        var types = ",";
+        var zTypesMap = {};
+        if (layoutJSON.layout.zDocument_Types && layoutJSON.layout.zDocument_Types.length > 0) {
+            var zTypes = layoutJSON.layout.zDocument_Types;
+            for (var i in zTypes) {
+                if (zTypes.hasOwnProperty(i)) {
+                    var zType = zTypes[i];
+                    if (zType.ZPAPER5__IsRequired__c) {
+                        types += zType.Name + ',';
+                    }
+                    zTypesMap[zType.Name] = zType;
+                }
+            }
+        }
+//        for (i in allTypes) {
+//            var parts = allTypes[i].split(":");
+//            if (parts[0] == thisType || parts[0] == (thisType + "__c")) { //ERS150321 __c
+//                var req = "";
+//                if (parts[2].indexOf("*") > -1) req = "*"; //ERS150321
+//                types += parts[1] + req + ",";
+//            }
+//        }
+        var missingTypes = types;
+
+//        var states = zFiles.docStates.split(",");
+        var states = [];
+        var zColumnsMap = {};
+        if (layoutJSON.layout.zDocument_Columns && layoutJSON.layout.zDocument_Columns.length > 0) {
+            var zColumns = layoutJSON.layout.zDocument_Columns;
+            for (var i in zColumns) {
+                if (zColumns.hasOwnProperty(i)) {
+                    var zColumn = zColumns[i];
+                    if (zColumn.ZPAPER5__IsRequired__c) {
+                        states.push(zColumn.Name);
+                    }
+                    zColumnsMap[zColumn.Name] = zColumn;
+                }
+            }
+        }
+        var styleBuf = "<style>.zpRow:hover {background-color:rgb(244,246,249);} </style><style>.zpLink:hover {text-decoration:underline !important;} \n" +
+                ".ipadScroll { -webkit-overflow-scrolling:auto; }" +
+                "</style>";
+        var tdStyles = "box-sizing:border-box;padding-left:0.99rem;color:rgb(0,112,210);position:relative;border-bottom:1px solid rgb(216,221,230);" +
+                "font-weight:normal;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;font-size:0.75rem;" +
+                "vertical-align:middle;line-height:2.5;border-collapse:collapse;";
+        var thStyles = "box-sizing:border-box;padding-left:0.33rem;color:rgb(84,105,141);position:relative;background-color:#f4f6f9;border-bottom:1px solid rgb(216,221,230);" +
+                //               "font-weight:normal;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;font-size:0.75rem;text-transform:uppercase;" +
+                "font-weight:normal;overflow:hidden;text-align:left;text-overflow:ellipsis;white-space:nowrap;font-size:0.75rem;" +
+                "vertical-align:middle;line-height:2.5;border-collapse:collapse;";
+
+        // document.write(styleBuf + "<div class='ipadScroll' style='width:100%;height:200px;overflow:auto;'><table style='table-layout:fixed;border:1px solid rgb(216,221,230);border-radius:4px;width:100%;border-spacing:0;'><tr style='border-collapse:collapse;'>");
+        document.write(styleBuf + "<div class='ipadScroll' style='width:100%;'><table style='table-layout:fixed;border:1px solid rgb(216,221,230);border-radius:4px;width:100%;border-spacing:0;'><tr style='border-collapse:collapse;'>");
+//        document.write("<th style='" + thStyles + ";width:40%;'>Form</th><th style='" + thStyles + "'>Type</th>");
+        for (i = 0; i < states.length; i++) {
+            if (0 == i) {
+                document.write("<th colspan='2' style='" + thStyles + "' class='rotate'>" +
+                        "<div style='height:40px;'><button  class=\"slds-button\" onclick='window.open(\"" + completeFormsURL + "\");'>Complete Forms</button></div>" +
+                        "<div><span>" + states[i] + "</span></div></th>");
+            }
+            else if (i < states.length - 1) {
+                document.write("<th style='" + thStyles + "' class='rotate'>" +
+                        "<div style='height:40px;'>&nbsp;</div>" +
+                        "<div><span>" + states[i] + "</span></div></th>");
+            }
+            else {
+                document.write("<th colspan='2' style='" + thStyles + "' class='rotate'>");
+                document.write("<div style='height:40px;'><button  class=\"slds-button\" onclick='refreshIFrame();'>Refresh</button></div>");
+                document.write("<div><span>" + states[i] + "</span></div></div></th>");
+            }
+        }
+        document.write("</tr>");
+//        document.write("<th style='" + thStyles + ";width:25%;'>Updated</th></tr>");
+//        document.write("<th style='" + thStyles + ";width:40%;'>Form</th><th style='" + thStyles + "'>Type</th>");
+        for (j = 0; j < zFiles.files.length; j++) {
+            writeRow(zFiles.files[j], "",
+                    layoutJSON.layout.ZPAPER5__Documents_ViewLink_Name__c,
+                    layoutJSON.layout.ZPAPER5__Documents_ViewLink_URL__c,
+                    layoutJSON.layout.ZPAPER5__Document_ViewLink_URL_Parameters__c, zTypesMap, zColumnsMap);
+        }
+
+        //alert(missingTypes);
+        var tmpFile = {"X_docType": "fax", "label": "", "modified": "", "X_reviews": "", "View": "", "BATES": ""};
+        var missing = missingTypes.split(",");
+        for (var j = 0; j < missing.length; j++) {
+            if (missing[j].length > 1) {
+                var label = "This is not required";
+                if (missing[j].indexOf("*") != -1) label = "This is required.";
+                //alert(missing[j]+" "+label);
+                tmpFile.X_docType = missing[j];
+                tmpFile.label = label;
+                writeRow(tmpFile, "missing"); //ERS150321 added missing
+            }
+        }
+        document.write("</table></div>");
+        if (missing.length == 0) document.write("<li>All known document types are present.</li>");
+        else if (missingTypes.indexOf("*") == -1) document.write("<li>All required document types are present.</li>");
+        else document.write("<li>" + missingTypes + " types are missing.</li>");
+    </script>
+</apex:component>

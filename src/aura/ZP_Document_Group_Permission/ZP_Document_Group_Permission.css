@@ -1,0 +1,9 @@
+/**
+ * Created by User on 5/25/2018.
+ */
+.THIS.selClass {
+    height: 160px;
+}
+.THIS .selClass {
+    height: 160px;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>zPaper server and other configuration info.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ZPAPER3__Library__c</fullName>
+        <defaultValue>&quot;2006Top&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>zPaper folder ID for Library materials</description>
+        <externalId>false</externalId>
+        <label>Library</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER3__Org__c</fullName>
+        <defaultValue>&quot;00D700000009gBV&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Org ID of the remote org that is sharing the Library</description>
+        <externalId>false</externalId>
+        <label>Org</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER3__server__c</fullName>
+        <defaultValue>&quot;sf.zpaper.com&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>zPaper server</description>
+        <externalId>false</externalId>
+        <label>server</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>zEnable</label>
+    <visibility>Public</visibility>
+</CustomObject>

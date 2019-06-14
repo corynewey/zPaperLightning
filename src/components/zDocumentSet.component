@@ -1,0 +1,101 @@
+<apex:component >
+<style>
+  td {
+      font-size: 8pt;
+  }
+  th.rotate > div > span {
+      font-size: 8pt;
+  }
+
+        th.rotate0 > div > span {
+            -ms-transform:rotate(315deg);
+            -moz-transform:rotate(315deg);
+            -webkit-transform:rotate(315deg);
+            -o-transform:rotate(315deg);
+            transform:rotate(315deg);
+            text-align: left;
+            display: block;
+        }
+</style>
+<!-- script src="https://demo.zpaper.com/kb/jsp/tableXMLSearch.jsp?sfIds=!ZPAPER3__Referral__c.Id,!Account.Id&mode=JSON&fields=label,ID,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&zPaper=1220&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script -->
+<script>
+function writeRow(f,mode) {
+  if (!mode) mode="view";
+  document.write("<tr>");
+  var i=0;
+  for (i=0; i<states.length; i++) {
+    var v=states[i];
+    var c="";
+    if (f.X_reviews.indexOf(v+" by")>-1) c=" checked title=\""+f.X_reviews+"\" ";
+    document.write("<td><input type='checkbox' readOnly='readOnly' onclick='return false' "+c+" id='cb"+v+"'></td>"); //ERS150321 readOnly, return false
+  }
+  var d=Date(f.modified); //"modified" : "2015-03-21 20:49:36.0",
+  if (mode=="missing") d="&nbsp;"; //ERS150323
+  else d=f.modified.substring(0,16); //ERS150323 TODO use the Date()
+  var dt=unescape(f.X_docType)+""; if ((dt+"")=="&nbsp;" || dt.indexOf("&")==0) dt=""; //alert(dt);
+  if (1==0 || dt=="") {//ERS150321 form with BATES like APP_Form
+      var stillMissing=types.split(","); //ERS150322 stillMissing is really misnamed since there can be more than one APP per record
+      for (i=0; i<stillMissing.length; i++) {
+          if (stillMissing[i] != "" && f.BATES.indexOf(stillMissing[i].replace("*","")+"_Form")>-1) {
+              dt=stillMissing[i].replace("*","");
+              i=100;
+          }
+      }
+      f.X_docType=dt;
+      //alert("'"+f.X_docType +"' BATES="+f.BATES + " from "+ missingTypes);
+  }
+  if (f.BATES.indexOf("_Form")>-1) {
+      var la=f.label; la=la.substring(1+la.indexOf("-"),la.indexOf("_")); f.label=la;
+  }
+  document.write("<td>"+dt+"</td><td>"+d.toLocaleString().substring(0,21)+"</td><td>"+f.View+" - "+f.label+"</td></tr>");
+  if (dt != "" && mode != "missing") missingTypes=missingTypes.replace(dt+"*,","").replace(dt+",","");
+}
+
+var recordTypes=zFiles.crmTypes.split(",");
+if (!thisType) thisType="Case:500"; //ERS141115 TODO get from SF //ERS150321 define on VF page
+for (i in recordTypes) {
+  if (recordTypes[i].indexOf(":"+zFiles.sfId.substring(0,3))!=-1) thisType=recordTypes[i].replace("ZPAPER3","").replace("__c","").replace("__","");
+}
+thisType=thisType.substring(0,thisType.indexOf(":"));
+//alert("thisType="+thisType);
+
+var allTypes=zFiles.docTypes.split(",");
+var types=",";
+for (i in allTypes) {
+   var parts=allTypes[i].split(":");
+   if (parts[0]==thisType || parts[0]==(thisType+"__c")) { //ERS150321 __c
+      var req=""; if (parts[2].indexOf("*")>-1) req="*"; //ERS150321
+      types+=parts[1]+req+",";
+   }
+}
+var missingTypes=types;
+
+var states=zFiles.docStates.split(",");
+document.write("<table border=1><tr>");
+for (i=0; i<states.length; i++) {
+document.write("<th class='rotate'><div><span>"+states[i]+"</span></div></th>");
+}
+document.write("<th>Type</th><th>Updated</th><th align='left'>Form</th></tr>");
+for (j=0; j<zFiles.files.length; j++) {
+   writeRow(zFiles.files[j]);
+}
+
+//alert(missingTypes);
+var tmpFile={"X_docType":"fax","label":"","modified":"","X_reviews":"","View":"","BATES":""};
+var missing=missingTypes.split(",");
+for (var j=0; j<missing.length; j++) {
+  if (missing[j].length > 1) {
+   var label="This is not required";
+   if (missing[j].indexOf("*")!=-1) label="This is required.";
+   //alert(missing[j]+" "+label);
+   tmpFile.X_docType=missing[j];
+   tmpFile.label=label;
+   writeRow(tmpFile,"missing"); //ERS150321 added missing
+  }
+}
+document.write("</table>");
+if (missing.length == 0 ) document.write("<li>All known document types are present.</li>");
+else if (missingTypes.indexOf("*")==-1) document.write("<li>All required document types are present.</li>");
+else document.write("<li>"+missingTypes+" types are missing.</li>");
+</script>
+</apex:component>

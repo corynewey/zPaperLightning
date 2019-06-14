@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AdvancedSetup</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <fields>
+        <fullName>ActualCost</fullName>
+    </fields>
+    <fields>
+        <fullName>AmountAllOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>AmountWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>BudgetedCost</fullName>
+    </fields>
+    <fields>
+        <fullName>CampaignMemberRecordTypeId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+    </fields>
+    <fields>
+        <fullName>ExpectedResponse</fullName>
+    </fields>
+    <fields>
+        <fullName>ExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyActualCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountAllOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyBudgetedCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberSent</fullName>
+    </fields>
+    <fields>
+        <fullName>IsActive</fullName>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberSent</fullName>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ParentId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>StartDate</fullName>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <type>Picklist</type>
+    </fields>
+    <listViews>
+        <fullName>AllActiveCampaigns</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Campaigns</label>
+    </listViews>
+    <listViews>
+        <fullName>MyActiveCampaigns</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Active Campaigns</label>
+    </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>CAMPAIGN.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.STATUS</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.START_DATE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>CAMPAIGN.NAME</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CAMPAIGN.NAME</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PARENT_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.CAMPAIGN_TYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.STATUS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.START_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.END_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NUM_RESPONSES</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>FullAccess</sharingModel>
+    <webLinks>
+        <fullName>ViewCampaignInfluenceReport</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>500</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View Campaign Influence Report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00O?rt=117&amp;break0=CAN&amp;scope=1&amp;scopeid_lkid={!Campaign.Id}&amp;scopeid={!Campaign_Name}&amp;c=CAN&amp;c=MR&amp;c=PCS&amp;c=CFN&amp;c=RN&amp;c=ON&amp;c=OA&amp;c=OS&amp;c=OCD&amp;c=AN&amp;s=OA&amp;duel0=CAN%2CMR%2CCFN%2CRN%2CAN%2CON%2CPCS%2COS%2COCD%2COA&amp;details=yes&amp;format=t</url>
+        <width>500</width>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__Backup_Emails</fullName>
+        <availability>online</availability>
+        <description>Saves existing emails into FaxEmailBackup fields</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Backup Emails</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/17.0/connection.js&quot;)}
+
+var result = sforce.connection.query(&quot;Select CampaignId, LeadId, ContactId From CampaignMember where CampaignId = &apos;{!Campaign.Id}&apos;&quot;);
+var records = result.getArray(&quot;records&quot;);
+
+if (confirm(&quot;Back up the existing email values?&quot;)) {
+
+var ids = &quot;&quot;;
+var names = &quot;&quot;;
+var blocked=&quot;&quot;;
+if (records.length &gt; 0) {
+for (var i = 0; i &lt; records.length; i++) {
+var sObject = records[i];
+if (sObject.LeadId) {
+var cResult = sforce.connection.query(&quot;Select Name,Email,ZPAPER__FaxEmailValue__c from Lead where Id=&apos;&quot; + sObject.LeadId + &quot;&apos;&quot;);
+var cRecords = cResult.getArray(&quot;records&quot;);
+if (cRecords.length &gt; 0) {
+var newC = new sforce.SObject(&quot;Lead&quot;);
+newC.id = sObject.LeadId;
+if (cRecords[0].Email != cRecords[0].ZPAPER__FaxEmailValue__c) {
+newC.ZPAPER__FaxEmailBackup__c=cRecords[0].Email;
+newC.Email=cRecords[0].ZPAPER__FaxEmailValue__c;
+var result = sforce.connection.update([newC]);
+} else blocked+=sObject.LeadId+&quot;,&quot;;
+}
+} else if (sObject.ContactId) {
+var cResult = sforce.connection.query(&quot;Select Name,Email,ZPAPER__FaxEmailValue__c from Contact where Id=&apos;&quot; + sObject.ContactId + &quot;&apos;&quot;);
+var cRecords = cResult.getArray(&quot;records&quot;);
+if (cRecords.length &gt; 0) {
+var newC = new sforce.SObject(&quot;Contact&quot;);
+newC.id = sObject.ContactId;
+if (cRecords[0].Email != cRecords[0].ZPAPER__FaxEmailValue__c) {
+newC.ZPAPER__FaxEmailBackup__c=cRecords[0].Email;
+newC.Email=cRecords[0].ZPAPER__FaxEmailValue__c;
+var result = sforce.connection.update([newC]);
+} else blocked+=sObject.ContactId+&quot;,&quot;;
+}
+}
+}
+if (ids != &quot;&quot;) alert(&quot;Leads are not supported yet. &quot;+ ids);
+if (blocked != &quot;&quot;) alert(&quot;Skipped &quot; + blocked + &quot; because that record&apos;s email was already the FaxEmail.&quot;);
+if (confirm(&quot;Refresh list?&quot;)) location.reload();
+} else alert(&quot;No records where found.&quot;);
+} //did not confirm</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__Restore_Emails</fullName>
+        <availability>online</availability>
+        <description>Copies backup emails back into the standard field.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Restore Emails</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/17.0/connection.js&quot;)}
+
+var result = sforce.connection.query(&quot;Select CampaignId, LeadId, ContactId From CampaignMember where CampaignId = &apos;{!Campaign.Id}&apos;&quot;);
+var records = result.getArray(&quot;records&quot;);
+
+if (confirm(&quot;Restore the backed up email values?&quot;)) {
+
+var ids = &quot;&quot;;
+var skipped=&quot;&quot;;
+var names = &quot;&quot;;
+if (records.length &gt; 0) {
+for (var i = 0; i &lt; records.length; i++) {
+var sObject = records[i];
+if (sObject.LeadId) {
+var cResult = sforce.connection.query(&quot;Select Name,Email,ZPAPER__FaxEmailValue__c,ZPAPER__FaxEmailBackup__c from Lead where Id=&apos;&quot; + sObject.LeadId + &quot;&apos;&quot;);
+var cRecords = cResult.getArray(&quot;records&quot;);
+if (cRecords.length &gt; 0) {
+var newC = new sforce.SObject(&quot;Lead&quot;);
+newC.id = sObject.LeadId;
+newC.Email=cRecords[0].ZPAPER__FaxEmailBackup__c;
+if (cRecords[0].ZPAPER__FaxEmailBackup__c != &quot;&quot;) var result = sforce.connection.update([newC]);
+else skipped+=newC.id+&quot;,&quot;;
+}
+} else if (sObject.ContactId) {
+var cResult = sforce.connection.query(&quot;Select Name,Email,ZPAPER__FaxEmail__c,ZPAPER__FaxEmailBackup__c from Contact where Id=&apos;&quot; + sObject.ContactId + &quot;&apos;&quot;);
+var cRecords = cResult.getArray(&quot;records&quot;);
+if (cRecords.length &gt; 0) {
+var newC = new sforce.SObject(&quot;Contact&quot;);
+newC.id = sObject.ContactId;
+newC.Email=cRecords[0].ZPAPER__FaxEmailBackup__c;
+if (cRecords[0].ZPAPER__FaxEmailBackup__c != &quot;&quot;) var result = sforce.connection.update([newC]);
+else skipped+=newC.id+&quot;,&quot;;
+}
+}
+}
+if (skipped != &quot;&quot;) alert(&quot;Skipped  &quot; + skipped);
+else location.reload();
+} else alert(&quot;No records where found.&quot;);
+} //did not confirm</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__massSend</fullName>
+        <availability>online</availability>
+        <description>Send to all Leads and Contacts belonging to this Campaign.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mass Send</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/17.0/connection.js&quot;)} 
+
+var sfType=&quot;Lead&quot;; 
+var kbHost = &quot;https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}&quot;; 
+var kbJSP= &quot;/kb/jsp/massFaxBin.jsp&quot;;
+kbJSP= &quot;/kb/jsp/massFaxBin.cma.jsp&quot;;
+
+var result = sforce.connection.query(&quot;Select CampaignId, LeadId, ContactId From CampaignMember where CampaignId = &apos;{!Campaign.Id}&apos; order by LeadId, ContactId&quot;); 
+var records = result.getArray(&quot;records&quot;); 
+
+//alert(&quot;self = &quot; + self.id); 
+//alert(&quot;self.document = &quot; + self.document); 
+//alert(&quot;self.document.body = &quot; + self.document.body); 
+
+var ids = &quot;&quot;; 
+var names = &quot;&quot;; 
+if (records.length &gt; 0) { 
+for (var i = 0; i &lt; records.length; i++) { 
+var sObject = records[i]; 
+if (sObject.LeadId) { 
+var lResult = sforce.connection.query(&quot;Select Name from Lead where Id=&apos;&quot; + sObject.LeadId + &quot;&apos;&quot;); 
+var lRecords = lResult.getArray(&quot;records&quot;); 
+if (lRecords.length &gt; 0) names += lRecords[0].Name + &quot;, &quot;; 
+else names += &quot;Unknown Name, &quot;; 
+ids+= sObject.LeadId + &quot;,&quot;; 
+} 
+else if (sObject.ContactId) { 
+var cResult = sforce.connection.query(&quot;Select Name from Contact where Id=&apos;&quot; + sObject.ContactId + &quot;&apos;&quot;); 
+var cRecords = cResult.getArray(&quot;records&quot;); 
+if (cRecords.length &gt; 0) names += cRecords[0].Name + &quot;, &quot;; 
+else names += &quot;Unknown Name, &quot;; 
+ids += sObject.ContactId + &quot;,&quot;; 
+} 
+} 
+if (confirm(&quot;Send the document to these Contacts/Leads:\n&quot; + names + &quot;?&quot;)) { 
+
+var html = &quot;&lt;html&gt;&quot; + 
+&quot;&lt;head&gt;&lt;title&gt;Mass Fax&lt;/title&gt;&quot; + 
+&quot;&lt;script type=\&quot;text/javascript\&quot;&gt;&quot; + 
+&quot; function submitForm() {&quot; + 
+&quot; var form = document.getElementById(&apos;massForm&apos;);&quot; + 
+&quot; form.submit();&quot; + 
+&quot; }&quot; + 
+&quot;&lt;/script&gt;&quot; + 
+&quot;&lt;/head&gt;&lt;body&gt;&quot; + 
+&quot;&lt;form id=&apos;massForm&apos; action=\&quot;&quot; + kbHost+kbJSP+&quot;\&quot; method=&apos;POST&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;sfUser&apos; value=&apos;{!$User.Username}&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;sfOrg&apos; value=&apos;{!$Organization.Id}&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;SFtype&apos; value=&apos;&quot;+sfType+&quot;&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;SFsession&apos; value=&apos;{!$Api.Session_ID}&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;SFserver&apos; value=&apos;{!$Api.Partner_Server_URL_310}&apos;&gt;&quot; + 
+&quot; &lt;input type=&apos;hidden&apos; name=&apos;sfIDs&apos; value=&apos;&quot; +ids+&quot;&apos;&gt;&quot; + 
+&quot;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;&quot;; 
+
+top.consoleRef=window.open(&apos;&apos;,&apos;myconsole&apos;,&apos;width=590,height=590,menubar=0&apos; + 
+&apos;,toolbar=1,status=0,scrollbars=1,resizable=0&apos;); 
+top.consoleRef.document.writeln(html); 
+top.consoleRef.document.close(); 
+top.consoleRef.submitForm(); 
+} 
+} 
+else { 
+alert(&quot;No records found&quot;); 
+}</url>
+    </webLinks>
+</CustomObject>

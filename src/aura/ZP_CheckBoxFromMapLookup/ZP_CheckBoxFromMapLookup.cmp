@@ -1,0 +1,18 @@
+<aura:component description="ZP_CheckBoxFromMapLookup">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="zMap" type="Object" access="public"/>
+    <aura:attribute name="zProperty" type="String" access="public"/>
+    <aura:attribute name="zResult" type="String" access="private"/>
+
+    <span class="slds-checkbox" title="{!v.zResult}">
+        <aura:if isTrue="{!or(empty(v.zResult), equals('Status not set',v.zResult))}">
+            <!-- not checked -->
+            <input type="checkbox" />
+            <aura:set attribute="else">
+                <!-- checked -->
+                <input type="checkbox" checked="checked"/>
+            </aura:set>
+        </aura:if>
+        <label class="slds-checkbox__label"><span class="slds-checkbox--faux" /></label>
+    </span>
+</aura:component>

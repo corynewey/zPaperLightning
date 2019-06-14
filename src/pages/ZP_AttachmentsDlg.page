@@ -1,0 +1,278 @@
+<apex:page controller="ZP_AttachmentsDlgController">
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/redmond/jquery-ui.css" />
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" />
+    <script type="text/javascript">
+        var srcSalesforce   = "SRC_SALESFORCE";
+        var srcZPaper       = "SRC_ZPAPER";
+        var gDataSrc;
+        var $gDataSrcSelect;
+        var $gAttachDlg;
+        var j$;
+        var gsfId;
+        var gCallback;
+        function promptForAttachment(sfId, dataSrc, callback) {
+            if (!dataSrc || (dataSrc.indexOf(srcSalesforce) < 0 && dataSrc.indexOf(srcZPaper) < 0)) {
+                alert("A data source parameter must be passed in and must match either '" +
+                        srcSalesforce + "' or '" + srcZPaper + "' or '" + srcSalesforce + "|" + srcZPaper + "' (pull from both Salesforce and zPaper).");
+            }
+            if (!callback) {
+                alert("A callback function must be passed in when showing the Attach dialog.");
+                return;
+            }
+            debugger;
+            gsfId = sfId;
+            gDataSrc = dataSrc.trim();
+            gCallback = callback;
+            $gDataSrcSelect = getSelectIdForDataSrc(gDataSrc);
+            $gDataSrcSelect.show();
+            if (gDataSrc === srcZPaper) {
+                handleSourceChange();   // only one select option, so build list of attachments
+            }
+            $gAttachDlg = j$('#dialog-main').dialog({
+                autoOpen: true,
+                height: 340,
+                width: 600,
+                modal: true,
+                buttons: {
+                    "Ok": function () {
+                        $gAttachDlg.dialog("close");
+                        var $rtnValue;
+                        var $rtnText;
+                        var $source = j$('#docSource').val();
+                        if ("Document" === $source) {
+                            $rtnValue = j$('#fileList').val();
+                            $rtnText = j$("#fileList option:selected").text();
+                        }
+                        else {
+                            $rtnValue = j$('#attachList').val();
+                            $rtnText = j$("#attachList option:selected").text();
+                        }
+                        callback($rtnValue, $rtnText);
+                    },
+                    "Cancel": function () {
+                        $gAttachDlg.dialog("close");
+                    }
+                }
+            });
+        }
+
+        function getSelectIdForDataSrc(dataSrc) {
+            var selectEle = null;
+            var parts = dataSrc.split("|");
+            for (var i in parts) {
+                if (parts.hasOwnProperty(i)) {
+                    var part = parts[i].trim();
+                    if (srcSalesforce === part) {
+                        selectEle = !selectEle ? j$("#sfDocSource") : j$("#bothDocSource");
+                    }
+                    else if (srcZPaper === part) {
+                        selectEle = !selectEle ? j$("#zpDocSource") : j$("#bothDocSource");
+                    }
+                }
+            }
+            return selectEle;
+        }
+
+        function showFolders() {
+            try {
+                Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ZP_AttachmentsDlgController.getFolderList}',
+                        function (result, event) {
+                            if (event.status) {
+                                debugger;
+                                var buffer = "";
+                                for (var i in result) {
+                                    if (result.hasOwnProperty(i)) {
+                                        var item = result[i];
+                                        buffer += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                                    }
+                                }
+                                j$('#folderList').html(buffer);
+                                j$('#attachments-row').hide();
+                                j$('#documents-row').show();
+                            }
+                            else {
+                                alert("Error retrieving items in folder: " + event.message + " -- " + event.where);
+                            }
+                        }
+                );
+            } catch (e) {
+                window.console.log("Exception building folder list: " + e);
+            }
+        }
+
+        function showDocuments() {
+            try {
+                var folderId = j$('#folderList').val();
+                Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ZP_AttachmentsDlgController.getFilesInFolder}',
+                        folderId,
+                        function (result, event) {
+                            if (event.status) {
+                                debugger;
+                                var buffer = "";
+                                for (var i in result) {
+                                    if (result.hasOwnProperty(i)) {
+                                        var item = result[i];
+                                        buffer += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                                    }
+                                }
+                                j$('#fileList').html(buffer);
+                            }
+                            else {
+                                alert("Error retrieving items in folder: " + event.message + " -- " + event.where);
+                            }
+                        }
+                );
+            }
+            catch (err) {
+                window.console.log("Exception building document list: " + err);
+            }
+        }
+
+        function showAttachments() {
+            try {
+                Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ZP_AttachmentsDlgController.getAttachmentList}',
+                        gsfId,
+                        function (result, event) {
+                            if (event.status) {
+                                debugger;
+                                var buffer = "";
+                                for (var i in result) {
+                                    if (result.hasOwnProperty(i)) {
+                                        var item = result[i];
+                                        buffer += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                                    }
+                                }
+                                j$('#attachList').html(buffer);
+                                j$('#documents-row').hide();
+                                j$('#attachments-row').show();
+                            }
+                            else {
+                                alert("Error retrieving attachments: " + event.message + " -- " + event.where);
+                            }
+                        }
+                );
+            } catch (e) {
+                window.console.log("Exception building attachment list: " + e);
+            }
+        }
+
+        function showZPAttachments() {
+            try {
+                Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ZP_AttachmentsDlgController.getZPaperAttachmentList}',
+                        gsfId,
+                        function (result, event) {
+                            if (event.status) {
+                                debugger;
+                                var buffer = "";
+                                result = JSON.parse(result);
+                                var files = result.files;
+                                for (var i in files) {
+                                    if (files.hasOwnProperty(i)) {
+                                        var item = files[i];
+                                        buffer += "<option value='" + item.ID + "'>" + item.label + "</option>";
+                                    }
+                                }
+                                j$('#attachList').html(buffer);
+                                j$('#documents-row').hide();
+                                j$('#attachments-row').show();
+                            }
+                            else {
+                                alert("Error retrieving attachments: " + event.message + " -- " + event.where);
+                            }
+                        },
+                        {escape: false}
+                );
+            } catch (e) {
+                window.console.log("Exception building attachment list: " + e);
+            }
+        }
+
+        function handleSourceChange() {
+            var $source = $gDataSrcSelect.val();
+            if ("Document" === $source) {
+                showFolders();
+            }
+            else if ("Attachment" === $source) {
+                showAttachments();
+            }
+            else if ("zpAttachment" === $source) {
+                showZPAttachments();
+            }
+        }
+
+    </script>
+    <div id="dialog-main" title="Choose Source" style="display:none;text-align:center;">
+        <table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+            <tr>
+                <td style="width:70%;">
+                    <select id="sfDocSource" style="width:100%;display:none;" onchange="handleSourceChange()">
+                        <option value="NONE">Select Source</option>
+                        <option value="Document">Salesforce Documents</option>
+                        <option value="Attachment">Salesforce Attachments</option>
+                    </select>
+                    <select id="bothDocSource" style="width:100%;display:none;" onchange="handleSourceChange()">
+                        <option value="NONE">Select Source</option>
+                        <option value="Document">Salesforce Documents</option>
+                        <option value="Attachment">Salesforce Attachments</option>
+                        <option value="zpAttachment">zPaper Attachments</option>
+                    </select>
+                    <select id="zpDocSource" style="width:100%;display:none;" onchange="handleSourceChange()">
+                        <option value="zpAttachment">zPaper Attachments</option>
+                    </select>
+                </td>
+                <!--<td>-->
+                    <!--<input style="width:180px;" type="text" id="docFile" />-->
+                    <!--<input style="width:72px;" type="button" value="Browse..." />-->
+                <!--</td>-->
+            </tr>
+            <tr id="documents-row" style="display:none;">
+                <td style="padding-top:12px;">
+                    <div id="documents-panel" style="width:100%;text-align:center;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%;">
+                            <tr>
+                                <td style="padding-right:3px;width:49%;">
+                                    <div style="text-align:center;font-weight:bold;width:100%;font-family:Arial">Folders</div>
+                                    <select style="width:100%;height:180px;" size="8" onchange="showDocuments()"
+                                            id="folderList">
+                                    </select>
+                                </td>
+                                <td style="padding-left:3px;width:49%;">
+                                    <div style="text-align:center;font-weight:bold;font-family:Arial;width:100%;">Documents</div>
+                                    <select style="width:100%;height:180px;" size="8"
+                                            id="fileList">
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr id="attachments-row" style="display:none;">
+                <td style="padding-top:12px;">
+                    <div id="attachments-panel" style="width:100%;text-align:center;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%;">
+                            <tr>
+                                <td style="padding-left:3px;width:70%;">
+                                    <div style="text-align:center;font-weight:bold;font-family:Arial;width:100%;">Attachments</div>
+                                    <select style="width:100%;height:180px;" size="8"
+                                            id="attachList">
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        j$ = jQuery.noConflict();
+        j$(document).ready(function () {
+        });
+    </script>
+</apex:page>

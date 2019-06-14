@@ -1,0 +1,69 @@
+<!-- **************************************************************************************************
+	 * Visualforce Name: SetupConfigPage
+     * Apex Controller Name: N/A
+     * Description: This page will be used to update the custom setting Zpapaer Config, where Session Id of classic and Partner URL will be saved, this page will called from home page, onload of the page the custom setting will be updated.
+     * Author: A.T
+     * Date : 5/12/2017 
+     *
+     * Modification Logs:
+     * ************************************************************************
+     * Developer                   Date                    Description
+     * ********************        *************           ********************
+     * A.T                          06/10/2017             Original Version
+     ************************************************************************************************** -->
+
+<apex:page >
+    
+    <!-- defining custom setting here -->
+    <apex:remoteObjects jsNamespace="RemoteObjectModel">  
+        <apex:remoteObjectModel name="ZPAPER5__ZpaperConfig__c" fields="Id,ZPAPER5__PartnerUrl__c,ZPAPER5__SessionId__c">  
+        </apex:remoteObjectModel>  
+    </apex:remoteObjects> 
+    
+    <script>
+    //to save data in custom setting 
+    function remot() { 
+        
+        (new RemoteObjectModel.ZpaperConfig__c()).retrieve( 
+            function(error, records, event) {
+                if(records[0]) {
+                    (new RemoteObjectModel.ZpaperConfig__c({
+                        PartnerUrl__c: '{!$Api.Partner_Server_URL_310}', 
+                        SessionId__c: '{!$Api.Session_Id}',
+                        Id: records[0].get("Id")
+                    })).update();
+                } else {
+                    (new RemoteObjectModel.ZpaperConfig__c({
+                        PartnerUrl__c: '{!$Api.Partner_Server_URL_310}', 
+                        SessionId__c: '{!$Api.Session_Id}'
+                    })).create();
+                }
+            });
+    }
+    
+    remot();
+    
+    var zServer="htt"+"ps://"+"Setup.zpaper4__zpro__c.zpaper4__server__c"; //ERS150708 security issues //ERS150812 fix this manaually
+    zServer="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}"; //ERS150812
+    if (zServer == ("htt"+"ps://")) {
+        zServer="htt"+"ps://"+"zp20.zpaper.com"; //ERS150606 trying to minimize setup
+    }
+    
+    function loadData() {   //TODO find a better way!  IE handles the zData scope differently using w() versus just src=
+        var aURL=zServer+"/kb/jsp/homeData.jsp?sfIds={!$CurrentPage.parameters.id},00Q1a000001woiE&mode=JSON&"+
+            "SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}";
+        loadScript(aURL);
+    }  
+    
+    function w(s) {document.writeln(s);}
+    function loadScript(src) { //ERS150627
+        var sc=document.createElement("script");
+        sc.type="text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(sc);
+        sc.src=src;
+        if (1==0) alert("Loaded " + src);
+    }
+    if (typeof zData === "undefined" || zData=="") loadData();
+    
+    </script>
+</apex:page>

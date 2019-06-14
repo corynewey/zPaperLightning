@@ -1,0 +1,13 @@
+<design:component label="Complete Form">
+    <!-- Capturing all the Buttons, Section Names and Section Filters from Lighting App builder -->
+    <!-- CRN170524 Adding filtering capability to fill-in the various sections -->
+    <design:attribute name="Button1" label="Produce Form" default="Produce Form"/>
+    <design:attribute name="Button2" label="Send Form" default="Send Form"/>
+    <design:attribute name="Button3" label="Print Form" default="Print Form"/>
+    <design:attribute name="Section1" label="Section 1" default="Preview and Send"/>
+    <design:attribute name="Section1Filter" label="Section 1 Filter" />
+    <design:attribute name="Section2" label="Section 2" default="Data Capture"/>
+    <design:attribute name="Section2Filter" label="Section 2 Filter" />
+    <design:attribute name="Section3" label="Section 3" default="Coversheet"/>
+    <design:attribute name="Section3Filter" label="Setion 3 Filter" />
+</design:component>

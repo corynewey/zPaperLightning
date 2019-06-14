@@ -1,0 +1,232 @@
+<apex:page >
+    <div class="slds">
+        <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <apex:stylesheet value="/resource/SLDS/assets/styles/salesforce-lightning-design-system-vf.css" />
+            
+            <div class="slds-size--1-of-2" style="width: 358px;"> 
+                <div class="slds-box slds-box--x-small slds-text-align--center slds-m-around--x-small sidebarModuleHeader brandPrimaryBgr">
+                    <h2 class="brandPrimaryFgr" style="background:transparent none repeat scroll 0 0;">
+                        
+                        <img id="logoImg" height="16px" src="https://qa01.zpaper.com/kb/z/images/z.png" onclick0="zToggle('zToolsDIV')"/>
+                        <span id="zTime">9:57 AM on 5/22</span>
+                    </h2>
+                </div>
+            </div>
+            
+            
+            <div class="slds-size--1-of-2" style="width: 358px;">
+                <div class="slds-box slds-box--x-small slds-text-align--center slds-m-around--x-small sidebarModuleBody droptarget" style="background-color:#cfeef8;border-radius:8px;padding-top:6px;padding-left:6px;">
+                    <li><a href="#" onclick="show('new')" id="zNew">0</a> received docs, <a href="#" onclick="show('sent')"  id="zSent">0</a> sent</li>
+                    <li><a href="#" onclick="show('signed')" id="zSigned">0</a> signed</li>
+                    <li style="display:none;" id="sendADocButton">
+                    	<input class="slds-button--brand" type="button" id="sendButton" value="Send" onclick="sendADoc(this)" /> &nbsp; <input class="slds-button--brand" type="button" id="signButton" value="Sign" onclick="sendADoc(this,'sign')" />
+                   	</li>
+                    <li id="zStatus"></li>
+                    <script>
+                    var plat=navigator.platform.toLowerCase();
+                    if (plat.indexOf("ipad")==-1 && plat.indexOf("iphone")==-1) w("<li id='zBreak'></li>");
+                    else w('<li><input class="droptarget" id="clip" size="15" value="mobile paste here" onchange="launch(this.value)"/><input type="button" value="Go" onclick="launch(clip.value)"></li>');
+                    </script>
+                    <a href="#" onclick="show('admin')">Admin</a> <!-- - <a href="#" onclick="loadData()">Update</a>--> - <a href="#" onclick="show('help')">Help</a>
+                    <div align="right" style="padding-right:6px;padding-bottom:2px;white-space0:nowrap;"><span id="zFax"></span>&nbsp; <i>powered by <a href="http://www.zpaper.com" target="zPaperWeb">zPaper</a></i></div>
+                </div>  <!-- End of sidebarModuleBody et all -->
+            </div>
+            
+            
+        </html>
+    </div>
+    
+    <div id="zTop">
+        <link href="/sCSS/33.0/sprites/148958786000/Theme3/default/base/extended.css" rel="stylesheet" type="text/css"></link>
+    <link href="/sCSS/33.0/sprites/1428958786000/Theme3/default/base/common.css" rel="stylesheet" type="text/css"></link>
+<style>
+    li {list-style-type:none;} //ERS150714
+    .slds-size--1-of-2 {width: 358px;}
+</style>
+<script>
+function w(s) {document.writeln(s);}
+function loadScript(src) { //ERS150627
+    var sc=document.createElement("script");
+    sc.type="text/javascript";
+    document.getElementsByTagName("head")[0].appendChild(sc);
+    sc.src=src;
+    //alert('############' + src);
+    if (1==0) alert("Loaded " + src); 
+}
+</script>
+<script type="text/javascript">
+var bodyList = document.getElementsByTagName('BODY');
+bodyList[0].style.margin = "0";    // Get rid of the padding on the left side of our widget.
+</script>
+
+
+<script>
+var zServer="htt"+"ps://"+"Setup.zpaper4__zpro__c.zpaper4__server__c"; //ERS150708 security issues //ERS150812 fix this manaually
+zServer="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}"; //ERS150812
+if (zServer == ("htt"+"ps://")) {
+    zServer="htt"+"ps://"+"zp20.zpaper.com"; //ERS150606 trying to minimize setup
+}
+function loadData() {   //TODO find a better way!  IE handles the zData scope differently using w() versus just src=
+    var aURL=zServer+"/kb/jsp/homeData.jsp?sfIds={!$CurrentPage.parameters.id},00Q1a000001woiE&mode=JSON&"+
+        "SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}";
+    
+    loadScript(aURL);
+    //w("<"+"script src='"+aURL+"'"+"></"+"script>");
+    //on server! w("<"+"script>setStatus();</"+"script>"); //ERS150613 need a better way from zPaper:Mobile bootstrap
+}
+
+var zID="{!$CurrentPage.parameters.id}"; //ERS150627
+function sendADoc(ele,mode) {
+    //v=parent.location.href;
+    //launch(v);
+    alert(mode);
+    id="{!$CurrentPage.parameters.id}"; //ERS150613
+    if ( id.indexOf("00P")==0 || id.indexOf("00T")==0 || (id.length != 18 && id.length != 15) ) {
+        alert("Navigate to a record and drag the 'https' symbol in the address bar to this panel.");
+        return;
+    }
+    if (!ele) ele=""; if (!mode) mode="send"; //ERS150711
+    launch("/"+id,mode);
+}
+
+function show(op) {
+    var URL=zServer+"/kb/jsp/SF_find.jsp?op="+op+"&with=SF_files.jsp&go=console.jsp&SFtype=All&SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}";
+    //ERS150627 added op to URL
+    var n="zPaperConsole";
+    var props="resizable=1,width=1100,height=700";
+    alert(URL);
+    if (op == "admin") {n="zPaperAdmin"; URL=URL.replace("go=console.jsp","mode=view&dbID=000000011071104170");}
+    if (window.name.indexOf("SF1") > -1) location=URL; //ERS150701 SF1
+    else if (1==1 || confirm(window.name)) {w=window.open(URL,n,props); w.focus();}
+}
+
+function setTime(id) {
+    var n=new Date();
+    var d=n.toString('MM/dd HH:nn:ss PM');
+    if (d.indexOf("(")>-1) d=d.substring(0,3+d.lastIndexOf(":"));
+    d=d.replace("2015 ","");
+    d=d.substring(0,19);
+    ele=document.getElementById(id);
+    if (ele) {
+        //ele.innerHTML=(n.getMonth()+1)+"/"+n.getDate()+" "+n.getHours()+":"+n.getMinutes()+":"+n.getSeconds();
+        ele.innerHTML=d;
+    }
+}
+
+//var zData={"Sent": 2, "New": 3, "Signed": 1};
+
+function setStatus(sts) {
+    var goodStatus=false;
+    if (sts && sts.length > 1) zData=sts; //ERS150627 solves the scope problems
+    if (typeof zData === "undefined" || zData=="") {alert("No zData yet!"); window.setTimeout(2000,"setStatus()"); return;}
+    for (var d in zData) {
+        ele=document.getElementById("z"+d);
+        var dd=(""+zData[d]).substring(0,2);
+        if (!ele) ele=document.getElementById(d);
+        if (ele && dd != "!!" ) {
+            //ele.innerHTML=(n.getMonth()+1)+"/"+n.getDate()+" "+n.getHours()+":"+n.getMinutes()+":"+n.getSeconds();
+            ele.innerHTML=zData[d];
+            goodStatus=true;
+        } else {
+            if (dd == "!!") eval((""+zData[d]).substring(2));
+        }
+    }
+    if (!goodStatus) { //ERS150627
+        document.getElementById("zTop").innerHTML="Contact your Salesforce admin for zPaper:Pro activation.";
+    }
+}
+
+function gotAnId(id,mode) {
+    var r=false;
+    if (!mode) mode=1;
+    if (id.length == 18 || id.length == 15) {
+        var pre=","+id.substring(0,3)+",";
+        if (",001,003,005,500,00Q,006,".indexOf(pre)>-1) r=true; //ERS150627 800,801, later?
+        else if (mode != 2) alert(id.substring(0,3) + " is not an Id supported by this zPaper solution. ERS150708");
+    }
+    return r;
+}
+
+	function launch(data,mode) { //ERS150523
+	    var id=data.substring(data.lastIndexOf("/")+1);
+	    if (id.indexOf("#")>-1) id=id.substring(0,id.indexOf("#"));
+	    if (!mode) mode=1; //ERS150708
+	    if ( !gotAnId(id,mode) ) {
+	        alert("Drop links that contain record IDs.  Attachment and Task links do not.");
+	        return;
+	    }
+	    var URL=zServer+"/kb/jsp/zSend.jsp?sfUser={!$User.Username}&sfOrg={!$Organization.Id}&sfIDs="+id+"&mode=firstOne&SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}";
+	    if (mode == "sign") URL=URL.replace("&mode=","&cmd="+mode+"&mode="); //ERS150711
+	    alert(URL);
+        if (window.name.indexOf("SF1") > -1) location=URL; //ERS150701 SF1
+        
+        else if (1==1 || confirm(URL)) {w=window.open(URL,"zPaperSend","resizable=1,width=850,height=800,scrollbars=1"); w.focus();}
+	}
+	setInterval(function(){ setTime('zTime'); }, 1000);
+	setInterval(function(){ loadData(); }, 120000); //ERS150627 how expensive is this?
+	if (typeof zData === "undefined" || zData=="") loadData(); //ERS150627
+	if (1==1 && gotAnId(zID,2)) {
+	    document.getElementById("sendADocButton").style.display=""; //ERS150627
+	    document.getElementById("zBreak").style.display="none"; //ERS150708
+	}
+
+/* ----------------- Events fired on the drag target ----------------- */
+
+	document.addEventListener("dragstart", function(event) {
+	    // The dataTransfer.setData() method sets the data type and the value of the dragged data
+	    event.dataTransfer.setData("Text", event.target.id);
+	    
+	    // Output some text when starting to drag the p element
+	    //document.getElementById("demo").innerHTML = "Started to drag the p element.";
+	    
+	    // Change the opacity of the draggable element
+	    event.target.style.opacity = "0.4";
+	});
+
+	// While dragging the p element, change the color of the output text
+	document.addEventListener("drag", function(event) {
+	    document.getElementById("demo").style.color = "green";
+	});
+
+	// Output some text when finished dragging the p element and reset the opacity
+	document.addEventListener("dragend", function(event) {
+	    //document.getElementById("demo").innerHTML = "Finished dragging the p element.";
+	    document.getElementById("demo").style.color = "black";
+	    event.target.style.opacity = "1";
+	});
+
+
+/* ----------------- Events fired on the drop target ----------------- */
+
+	// When the draggable p element enters the droptarget, change the DIVS's border style
+	document.addEventListener("dragenter", function(event) {
+	    if (window.console) { window.console.log("@@@ dragenter: event.target.className = " + event.target.className + " @@@"); }
+	    if (window.console) { window.console.log("#### setting border to red dotted line ####"); }
+	    document.getElementById("glasspaneDiv").style.display = "block";
+	});
+	
+	// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
+	document.addEventListener("dragover", function(event) {
+	    event.preventDefault();
+	});
+
+
+
+/* On drop - Prevent the browser default handling of the data (default is open as link on drop)
+Reset the color of the output text and DIV's border color
+Get the dragged data with the dataTransfer.getData() method
+The dragged data is the id of the dragged element ("drag1")
+Append the dragged element into the drop element
+*/
+document.addEventListener("drop", function(event) {
+    event.preventDefault();
+    if ( event.target.className == "dodropTarget" ) {
+        document.getElementById("glasspaneDiv").style.display = "none";
+        var data = event.dataTransfer.getData("Text");
+        alert('fffffffffffffffff' +  launch(data));
+        launch(data);
+    }
+});
+</script>
+</div>
+</apex:page>

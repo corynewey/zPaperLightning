@@ -1,0 +1,58 @@
+<aura:component description="ZP_DocViewer" controller="ZP_DocViewerController" access="global" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId">
+<!--<aura:component description="ZP_DocViewer" controller="ZP_DocViewerController" access="global" implements="flexipage:availableForAllPageTypes,force:hasRecordId">-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:handler event="c:ZP_Event_DocViewer" action="{!c.handleApplicationEvent}"/>
+
+    <aura:attribute name="zpSnippetIDFldName" type="String" default="" access="global" required="true"/>
+    <aura:attribute name="displayOnInit" type="Boolean" default="true" access="global" required="true"/>
+    <aura:attribute name="recordId" type="Id" default="" access="global"/>
+    <aura:attribute name="docId" type="String" default="" access="global"/>
+    <aura:attribute name="faxDetails" type="PC_DocumentInboundFaxLightningController.Object"/>
+    <aura:attribute name="docViewerId" type="String" default="" access="global"/>
+    <!--<aura:attribute name="ErrorText" type="String" default="{! $Label.c.PC_Lighting_Error_Message}" />-->
+
+    <!-- zPaperID={!v.faxDetails.zpDBId}<br/> -->
+    <!--<a target="zTriage" class="slds-button slds-button&#45;&#45;brand" href="{!('https://'+v.faxDetails.zpServer+'/kb/jsp/console.jsp?hide0=label&amp;dbID='+v.faxDetails.zpDBId)}">Triage</a>-->
+    <!--<a target="_blank" class="slds-button slds-button&#45;&#45;brand" href="{!('https://'+v.faxDetails.zpServer+'/kb/jsp/SF_find.jsp?hide0=label&amp;dbID='+v.faxDetails.zpDBId)}">Popout</a>-->
+    <!--<a target="zPDF" class="slds-button slds-button&#45;&#45;brand" href="{!('https://'+v.faxDetails.zpServer+'/kb/jsp/markup.jsp?hide0=label&amp;dbID='+v.faxDetails.zpDBId)}">Markup</a>-->
+    <!--<a target="zPDF" class="slds-button slds-button&#45;&#45;brand" href="{!('https://'+v.faxDetails.zpServer+'/kb/jsp/massFaxBin.jsp?sfID='+v.faxDetails.sfDocId+'&amp;barcode0=SX-'+v.faxDetails.sfDocId+'&amp;mode=fax&amp;&amp;dbID='+v.faxDetails.zpDBId+'&amp;forwardID='+v.faxDetails.zpDBId)}">Forward</a>-->
+    <!--<a target="zPDF" class="slds-button slds-button&#45;&#45;brand" href="{!('https://'+v.faxDetails.zpServer+'/kb/jsp/SF_find.jsp?hide0=label&amp;dbID='+v.faxDetails.zpDBId)}">Tools...</a>-->
+    <!-- <a target="zPaperSSO" class="slds0button slds0button00brand" href="/one/one.app#/n/ZPAPER__zPaper">+</a> <iframe name="zPaperSSO" width="10" height="10"></iframe> -->
+    <!-- <li>zpID='{!v.PC_zPaper_Fax_Unique_Id__c}' ?= '{!v.faxDetails.zpDBId}' length={!(v.faxDetails.zpDBId == null)} attachmentId={!v.faxDetails.attachmentId}</li> -->
+
+    <!--<ltng:require scripts="{!$Resource.walkMeInitScript_js}" />-->
+
+<!-- CRN190326 Case 57948 Eric wants this to be done with a ribbon bar icon.
+    <div style="float:right;padding-bottom:4px;">
+        <lightning:buttonIcon variant="bare" alternativeText="Pop-out to New Window" iconName="utility:new_window" onclick="{!c.handleClick}" size="large"/>
+    </div>
+-->
+<!--
+    <div style="border:2px solid black">
+        DisplayOnInit = {!v.displayOnInit}><br/>
+        Fax Details = {!v.faxDetails}<br/>
+        Received Id = {!v.faxDetails.zpDBId}<br/>
+        If statement = {!and(v.displayOnInit, not(empty(v.faxDetails.zpDBId)))}
+    </div>
+-->
+    <!-- CRN190326 Case 57498 Why in the world were we looking at attachmentId? Also even if we need it, the "||" should be replaced with a comma. -->
+    <!--<aura:If isTrue="{!and(v.displayOnInit, or(v.faxDetails.attachmentId != null || v.faxDetails.zpDBId != null))}">-->
+    <aura:If isTrue="{!and(v.displayOnInit, not(empty(v.faxDetails.zpDBId)))}">
+        <!--<div style="float:right;padding-bottom:4px;">-->
+            <!--<img src="/resource/zImage_Pop_out" style="width:20px;opacity:0.3" title="Pop-out to New Window" />-->
+        <!--</div>-->
+        <!-- CRN181114 Always hiding the tools area. Added "hide=label" to the URL to hide it. -->
+        <!--src="{!if(v.faxDetails.zpDBId == null,'/servlet/servlet.FileDownload?file='+v.faxDetails.attachmentId,'https://'+v.faxDetails.zpServer+'/kb/jsp/SF_find.lightning.jsp?SFuser='+v.faxDetails.sfUser+'&amp;hide=label&amp;dbID='+v.faxDetails.zpDBId+'&amp;SFserver='+v.faxDetails.sfServer+'&amp;SFsession='+v.faxDetails.sfSession)}"-->
+        <iframe id="zPDF" name="zPDF" class="faxImage"
+                src="{!if(not(empty(v.faxDetails.zpDBId)),'https://'+v.faxDetails.zpServer+'/kb/jsp/SF_find.lightning.jsp?SFuser='+v.faxDetails.sfUser+'&amp;hide=label&amp;dbID='+v.faxDetails.zpDBId+'&amp;SFserver='+v.faxDetails.sfServer+'&amp;SFsession='+v.faxDetails.sfSession)}"
+                width="100%" height="80%" style="min-height:700px;"/>
+        <aura:set attribute="else">
+            <!--No file found in the Attachment or in the zPaper repository!-->
+            <iframe id="{!'zPDF_' + v.docViewerId}" name="zPDF" class="faxImage" width="100%" height="80%" style="min-height:700px;"/>
+        </aura:set>
+    </aura:If>
+    <!--<aura:If isTrue="{ ! (!(v.faxDetails.attachmentId != null || v.faxDetails.zpDBId != null))}">-->
+        <!--No file found in the Attachment or in the zPaper repository!-->
+    <!--</aura:If>-->
+</aura:component>

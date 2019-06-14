@@ -1,0 +1,11 @@
+<aura:component description="ZP_DocumentSetStatusTable" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="zPDocumentsObj" type="Object" access="public"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="namespacePrefix" type="String"/>
+
+    <table class="slds-table slds-table--bordered slds-max-medium-table--stacked" style="position:relative;height:100%;">
+        {!v.body}
+    </table>
+</aura:component>

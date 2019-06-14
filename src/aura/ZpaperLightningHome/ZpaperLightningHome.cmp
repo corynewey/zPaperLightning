@@ -1,0 +1,86 @@
+<!-- **************************************************************************************************
+	 * Lighting Component Name: ZpaperLightningHome
+     * Apex Controller Name: ZpaperHomeController
+     * Description: This component using to displaying the zPaper Home login and dashboard page
+     * Author: A.T
+     * Date : 4/20/2017
+     *
+     * Modification Logs:
+     * ************************************************************************
+     * Developer                   Date                    Description
+     * ********************        *************           ********************
+     * A.T                          05/06/2017             Original Version
+     ************************************************************************************************** -->
+
+<aura:component controller="ZpaperHomeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!-- SetupConfigPage page will be used to update the custon settong Zpapaer Config, where Session Id of classic and Partner URL
+         will be saved, this page will called from home page, onload of the page the custom setting will be updated. -->
+    <div style="display:none;">
+        <iframe aura:id="vfFrame" src="{!'https://zpaper1-dev-ed.my.salesforce.com/apex/SetupConfigPage'}"/>
+    </div>
+    
+    <ltng:require styles="/resource/SLDS/assets/styles/salesforce-lightning-design-system-vf.css" />
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+	
+    <!-- Capturing the current page recordId Form VF page ZHomeComponentPage--> 
+    <aura:attribute name="recordId" type="Id" />
+	<!-- Holding the Complete Form response --> 
+    <aura:attribute name="zPData" type="Object" />
+    <!-- Capturing the SessionId Form VF page ZHomeComponentPage --> 
+    <aura:attribute name="sessionId" type="String"/> 
+    <aura:attribute name="settings" type="Map" default="{}"/> 
+        
+    <!-- properties -->
+    <aura:attribute name="toggleButton" type="Boolean" access="global"/> 
+    <aura:attribute name="AddImage" type="String" access="global"/> 
+    
+    <aura:attribute name="myDateTime" type="Date" default="2014-09-29T00:17:08z"/>
+	<ui:outputDateTime value="{!v.myDateTime}"/>
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        <div class="slds">
+            <div class="slds-size--1-of-2" style="width: 380px;"> 
+                <div class="slds-box slds-box--x-small slds-text-align--center slds-m-around--x-small sidebarModuleHeader brandPrimaryBgr">
+                    <h2 class="brandPrimaryFgr" style="background:transparent none repeat scroll 0 0;">
+                        
+                        <img style="height:16px" src="{!v.AddImage}" />
+                        <ui:outputDate value="{!v.zPData.zClock}"/>
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="slds-size--1-of-2" style="width: 380px;"> 
+                <div class="slds-box slds-box--x-small slds-text-align--center slds-m-around--x-small sidebarModuleBody droptarget" style="background-color:#cfeef8;border-radius:8px;padding-top:6px;padding-left:6px;">
+                    <a href="#" onclick="{!c.show}" id="new" why="ERS170520 new now received">{!v.zPData.Received}</a> received docs,
+                    <a href="#" onclick="{!c.show}"  id="sent">{!v.zPData.Sent}</a> sent
+                    <a href="#" onclick="{!c.show}" id="/">{!v.zPData.SentFaxPage}</a> signed
+                    <br/><br/>
+                    
+                    <aura:if isTrue="{!v.toggleButton}">
+                        <div  >
+                           
+                            <input class="slds-button--brand" type="button" value="Send" onclick="{!c.sendADoc}" /> &nbsp; 
+                            <input class="slds-button--brand" type="button" id="sign" value="sign" onclick="{!c.sendADoc}" />
+                            <br/><br/>
+                        </div>
+                    </aura:if>
+                    <div id="zStatus">
+                        {!v.zPData.zStatus}
+                    </div>
+                    
+                    <a href="#" onclick="{!c.show}" id="admin">Admin</a> <!-- - <a href="#" onclick="loadData()">Update</a>--> - 
+                    <a href="#" onclick="{!c.show}" id="help">Help</a>
+                    <div align="right" style="padding-right:6px;padding-bottom:2px;white-space0:nowrap;">
+                        <span id="zFax"><aura:unescapedHtml value="{!v.zPData.zFax}"/> </span>&nbsp; <i>powered by <a href="http://www.zpaper.com" target="zPaperWeb">zPaper</a></i></div>
+                </div>
+            </div> 
+        </div>
+    </html>
+    <div id="zTop">
+        <ltng:require styles="/sCSS/33.0/sprites/148958786000/Theme3/default/base/extended.css" />
+        <ltng:require styles="/sCSS/33.0/sprites/1428958786000/Theme3/default/base/common.css" />
+    </div>
+    <!-- ERS170615 iframe src="/apex/zPaperPendoAgentTool" width="0px" height="0px"/ -->
+</aura:component>

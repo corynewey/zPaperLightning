@@ -1,0 +1,44 @@
+<aura:component description="ZP_DocumentBundler" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" controller="ZP_DocumentBundlerController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="namespacePrefix" type="String"/>
+    <aura:attribute name="recordId" type="Id" access="PUBLIC"/>
+    <aura:attribute name="formsList" type="List" access="PUBLIC"/>
+    <aura:attribute name="bundleTemplateList" type="List" access="PUBLIC"/>
+
+    <style>
+        .slds-modal__container{
+            max-width: 90% !important;
+            width:90% !important;
+        }
+    </style>
+
+    <div aura:id="bundlerFrame" style="min-width:1024px;position:relative;">
+        <div style="float:left; padding-right:24px;">
+            <lightning:button label="Produce Document" onclick="{!c.produceDocument}" />
+            <div style="padding-top:12px;">
+                <div style="font-weight:bold;font-size:14px;">Forms List</div>
+                <div>
+                    <table>
+                        <aura:iteration items="{!v.formsList}" var="form">
+                            <tr>
+                                <td>
+                                    <!--<ui:inputCheckbox text="{!form.id}" click="{!c.handleCkBoxClick}" label="testing" />-->
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox text="{!form.id}" click="{!c.handleCkBoxClick}" />
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label">&nbsp;&nbsp;{!form.label}</span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="border:1px solid darkgray;position:absolute;right:12px;width:1024px;">
+            View Bundle
+            <ZPAPER5:ZP_DocViewer zpSnippetIDFldName="NONE" docViewerId="bundlerViewer" />
+        </div>
+    </div>
+</aura:component>

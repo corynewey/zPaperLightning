@@ -1,0 +1,4 @@
+<apex:page standardController="Case">
+  
+    <a href="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/SF_find.jsp?go=formList.jsp&sfIDs={!Case.Id},{!Case.Contact.Id},{!Case.Account.Id}&SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}"> click here </a>
+</apex:page>

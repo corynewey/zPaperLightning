@@ -1,0 +1,43 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" controller="zDocumentSetCaseController">
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   
+   <aura:attribute name="ZPaperDocsList" type="zDocumentSetCaseController.zPaperFilesResponse" />
+   <aura:attribute name="zDocStatusOld" type="String[]"/>
+   <aura:attribute name="zDocStatusNew" type="String[]"/>
+   <aura:attribute name="zDocTypes" type="String[]"/>
+   <aura:attribute name="recordId" type="Id" />
+    
+   <aura:attribute name="Delivered" type="String" default="DELIVERED" access="global" />
+   <aura:attribute name="Indexed" type="String" default="INDEXED" access="global" />
+   <aura:attribute name="Rejected" type="String" default="REJECTED" access="global" />
+   <aura:attribute name="Processed" type="String" default="PROCESSED" access="global" />
+   <aura:attribute name="Updated" type="String" default="UPDATED" access="global" />
+   <aura:attribute name="Verified" type="String" default="VERIFIED" access="global" />    
+   <aura:attribute name="Type" type="String" default="TYPE" access="global" />
+   <aura:attribute name="UpdatedDate" type="String" default="UPDATED" access="global" />
+   <aura:attribute name="Form" type="String" default="FORM" access="global" />
+    
+   <aura:attribute name="HDOT" type="String" default="HDOT" access="global" />
+   <aura:attribute name="a3500a" type="String" default="3500" access="global" />
+   <aura:attribute name="DOSE" type="String" default="DOSE" access="global" />
+   <aura:attribute name="ENRLC" type="String" default="ENRLC" access="global" />
+   <aura:attribute name="PIRM" type="String" default="PIRM" access="global" />
+   <aura:attribute name="REFR" type="String" default="REFR" access="global" />
+   
+   <aura:attribute name="sortOrder" type="String" default="ASC" access="global" />    
+    
+   <table class="slds-table slds-table--bordered slds-max-medium-table--stacked" >    
+       <thead>        
+          <tr class="slds-text">
+              <aura:iteration items="{!v.zDocStatusNew}" var="status" >
+                <th scope="col" class="slds-is-sortable"><div class="slds-truncate" title="Name">{!status}</div></th>
+              </aura:iteration>
+          </tr>
+      </thead>
+      <tbody id="data">
+      </tbody>
+    </table> <br/>
+    <span id="mDocs">
+      <span> Missed Doc Types :</span>
+   </span>
+</aura:component>

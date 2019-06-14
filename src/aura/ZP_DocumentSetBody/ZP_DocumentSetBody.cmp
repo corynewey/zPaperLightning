@@ -1,0 +1,10 @@
+<aura:component description="ZP_DocumentSetBody">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="zPDocumentsObj" type="Object" access="public"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="namespace" type="String" default="c"/>
+    <aura:attribute name="namespacePrefix" type="String" default=""/>
+    <tbody>
+    {!v.body}
+    </tbody>
+</aura:component>

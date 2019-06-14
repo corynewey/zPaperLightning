@@ -1,0 +1,22 @@
+<design:component label="Column Labels">
+    <design:attribute name="Delivered" label="Delivered" default="DELIVERED" description="Please follow the format: Display/Not-Display;Column Name;Order     Example: 1) Yes;Delivered;1;   2)No;   "/>
+    <design:attribute name="Indexed" label="Indexed" default="INDEXED" description="Please follow the format: Display/Not-Display;Column Name;Order     Example: 1) Yes;Delivered;2;   2)No;Indexed;3   "/>
+    <design:attribute name="Rejected" label="Rejected" default="REJECTED" description="Please follow the format: Display/Not-Display;Column Name;Order     Example: 1) Yes;Delivered;6;   2)No;Rejected   "/>
+    <design:attribute name="Processed" label="Processed" default="PROCESSED" description="Please follow the format: Display/Not-Display;Column Name;Order     Example: 1) Yes;Delivered;3;   2)No;Processed;5  "/>
+    <design:attribute name="Updated" label="Updated" default="UPDATED" description="Please follow the format: Display/Not-Display;Column Name;Order     Example: 1) Yes;Delivered;5;   2)No;4  "/>
+    <design:attribute name="Verified" label="Verified" default="VERIFIED" description="Please follow the format: Display/Not-Display;Column Name;Order    Example: 1) Yes;Delivered;4;   2)No;  "/>    
+    <design:attribute name="Type" label="Type" default="TYPE"/>
+    <design:attribute name="UpdatedDate" label="Updated" default="UPDATED"/>
+    <design:attribute name="Form" label="Form" default="FORM"/>
+    
+    <design:attribute name="HDOT" label="HDOT" datasource="Yes,No" description="Please select the filter"/>
+    <design:attribute name="a3500a" label="3500" datasource="Yes,No" description="Please select the filter"/>
+    <design:attribute name="DOSE" label="DOSE" datasource="Yes,No" description="Please select the filter"/>
+    <design:attribute name="ENRLC" label="ENRLC" datasource="Yes,No" description="Please select the filter"/>
+    <design:attribute name="PIRM" label="PIRM" datasource="Yes,No" description="Please select the filter"/>
+    <design:attribute name="REFR" label="REFR" datasource="Yes,No" description="Please select the filter"/>
+    
+    <!-- Sorting order -->
+    <design:attribute name="sortOrder" label="Sort Order" description="Please enter ASC or DESC" /> 
+    
+</design:component>

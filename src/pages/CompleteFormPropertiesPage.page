@@ -1,0 +1,19 @@
+<apex:page standardController="CompleteForm__c" tabStyle="Case">
+    
+    <apex:sectionHeader title="Complete Form" subtitle="Enter Properties"/>
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageblocksection title="Properties">
+                
+                
+            
+            </apex:pageblocksection>
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!Save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+                
+            </apex:pageBlockButtons>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<design:component label="zPaper Document Viewer">
+    <design:attribute name="displayOnInit" label="Display Associated Document on Viewer Init" description="Display the associated document (indicated by 'zPaper Document Id Field Name' - below)" />
+    <design:attribute name="zpSnippetIDFldName" label="zPaper Document Id Field Name" description="Field which holds the zPaper Document Id" />
+    <design:attribute name="docViewerId" label="zPaper Document Viewer Id (optional)" description="Identifier that helps differentiate the component if it is used multiple times on the same page" />
+</design:component>

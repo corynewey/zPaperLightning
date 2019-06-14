@@ -1,0 +1,7 @@
+<design:component >
+    
+    <design:attribute name="toggleButton" label="Toggle Button" description="Show or Hide the buttons"/>
+    
+    <design:attribute name="AddImage" label="Image" description="Put URL of the image"/>
+    
+</design:component>

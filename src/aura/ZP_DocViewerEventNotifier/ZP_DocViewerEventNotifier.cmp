@@ -1,0 +1,8 @@
+<aura:component description="ZP_DocViewerEventNotifier" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:registerEvent name="ZPEventDocViewer" type="c:ZP_Event_DocViewer"/>
+    <aura:handler name="init" value="{!this}" action="{!c.fireApplicationEvent}" />
+    <aura:attribute name="recordId" type="Id" default="NULL" access="global"/>
+    <aura:attribute name="action" type="String" default="NULL" access="global"/>
+    <aura:attribute name="namespace" type="String" default="" />
+    <aura:attribute name="namespacePrefix" type="String" default="" />
+</aura:component>

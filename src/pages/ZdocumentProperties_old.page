@@ -1,0 +1,96 @@
+<apex:page controller="zDocumentPropertiesController">
+    <apex:form id="frm">
+        
+        <apex:pageblock title="zDocument Properties">
+            <apex:pageBlockSection >
+                <apex:outputPanel >
+                    <apex:outputLabel style="font-weight:bold" value="Select Layout:  "/>
+                    <apex:selectList value="{!selectedDesignLayout}" multiselect="false" size="1">
+                        <apex:actionSupport action="{!getZDocumentSetups}" event="onchange"/>
+                        <apex:selectOptions value="{!designLayoutOptions}"/>                
+                    </apex:selectList> &nbsp;&nbsp;
+                    <apex:commandLink value="New Design layout" reRender="frm">
+                         <apex:param name="selectedProp" value="NewDesign" assignTo="{!selectedProperty}"/>
+                    </apex:commandLink> <br/> <br/>
+                    <apex:outputLabel rendered="{!selectedDesignLayout != null && selectedDesignLayout != ''}"> <b>Selected Design Layout Id: </b> &nbsp;&nbsp; {!selectedDesignLayout} </apex:outputLabel>
+                </apex:outputPanel>
+                
+                <apex:pageBlockSection columns="1" rendered="{!selectedProperty == 'NewDesign'}">
+                   <apex:inputField value="{!DesignLayout.Name}"/>
+                   <apex:pageBlockSectionItem >
+                       <apex:commandButton action="{!saveDesignLayout}" value="Save" reRender="frm"/>
+                       <apex:commandButton value="Cancel" reRender="frm">
+                            <apex:param name="selectedProp" value="" assignTo="{!selectedProperty}"/>
+                       </apex:commandButton>
+                   </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="false">
+                <apex:pageBlockSection title="Column Names" columns="1">
+                      <apex:pageBlockTable value="{!zDocColumnsMap}" var="zDocProp" id="pgt">
+                      <apex:column headerValue="Action" rendered="{!zDocProp == selectedProperty}">
+                          <apex:commandLink value="Cancel" rerender="frm">  
+                              <apex:param name="selectedProp" value="" assignTo="{!selectedProperty}"/>
+                          </apex:commandLink> &nbsp; | &nbsp;
+                          <apex:commandLink action="{!updateColumnName}" value="Save"/>
+                      </apex:column>
+
+                      <apex:column headerValue="Action" rendered="{!zDocProp != selectedProperty}">
+                          <apex:commandLink value="Edit" action="{!editColumnName}" rerender="frm"> 
+                              <apex:param name="selectedProp" value="{!zDocProp}" assignTo="{!selectedProperty}"/>
+                          </apex:commandLink>
+                      </apex:column>
+                      
+                      <apex:column headerValue="Actual Column Name" >
+                          <apex:outputField value="{!zDocColumnsMap[zDocProp].ActualColumn_Name__c}"/>
+                      </apex:column>
+                      
+                      <apex:column headerValue="New Column Name" rendered="{!zDocProp == selectedProperty}">
+                          <apex:inputField value="{!zDocumentSetup.Name}"/>
+                      </apex:column>
+                      
+                      <apex:column headerValue="New Column Name" rendered="{!zDocProp != selectedProperty}">
+                          <apex:outputField value="{!zDocColumnsMap[zDocProp].Name}"/>
+                      </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:commandLink value="New Column" rerender="frm"> 
+                         <apex:param name="selectedProp" value="NewColumn" assignTo="{!selectedProperty}"/>
+                    </apex:commandLink>
+                  <!--  <apex:pageBlockSection rendered="{!selectedProperty == 'NewColumn'}">
+                       <apex:inputField label="Column Name" value="{!ZDocumentSetup.Name}"/>
+                       <apex:inputField value="{!ZDocumentSetup.ActualColumn_Name__c}"/>
+                       <apex:pageBlockSectionItem >
+                           <apex:commandButton action="{!saveNewColumn}" value="Save" reRender="frm"/>
+                           <apex:commandButton value="Cancel" reRender="frm">
+                                <apex:param name="selectedProp" value="" assignTo="{!selectedProperty}"/>
+                           </apex:commandButton>
+                       </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>  -->
+               </apex:pageBlockSection>
+                
+               <apex:pageBlockSection title="Columns Visibility & Sorting" columns="1">
+                   <c:zDocumentPropertiesMultiSelect leftlabel="Available Columns" leftoption="{!availableZDocsClmns}" rightlabel="Selected Columns" rightoption="{!selectedZDocsClmns}" size="10" width="200px"/>
+                    <apex:outputPanel style="margin-left:47%">
+                        <apex:commandbutton action="{!saveColumnProperties}" value="Save"></apex:commandbutton>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+             </apex:pageBlockSection>            
+            
+             <apex:pageBlockSection collapsible="false">
+                <apex:pageBlockSection title="Document Types" columns="1">
+                     <apex:pageBlockTable value="{!zDocTypesMap}" var="zDocTypeProp">                     
+                       <apex:column headerValue="DocType Name">
+                          <apex:outputField value="{!zDocTypesMap[zDocTypeProp].Name}"/>
+                       </apex:column>
+                    </apex:pageBlockTable>
+               </apex:pageBlockSection>
+               <apex:pageBlockSection title="DocType Visibility & Sorting" columns="1">
+                   <c:zDocumentPropertiesMultiSelect leftlabel="Available DocTypes" leftoption="{!availableZDocsTypes}" rightlabel="Selected DocTypes" rightoption="{!selectedZDocsTypes}" size="10" width="200px"/>
+                    <apex:outputPanel style="margin-left:47%">
+                        <apex:commandbutton action="{!saveDocTypeProperties}" value="Save"></apex:commandbutton>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+             </apex:pageBlockSection>            
+         </apex:pageblock>
+    </apex:form>
+</apex:page>

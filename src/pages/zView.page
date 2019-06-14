@@ -1,0 +1,25 @@
+<apex:page standardController="Case">
+<apex:form >
+<apex:commandButton value="Split" onclick="zSendMessage('click-bSplit');" rendered="true" rerender="leftOutPutPanel" styleClass="FaxButtonClass" />
+<apex:commandButton value="Markup" onclick="zSendMessage('click-bMarkup');" rendered="true" rerender="leftOutPutPanel" styleClass="FaxButtonClass" />
+<select><option value="1">Data Entry 1</option><option value="2">Data Entry 2</option></select>
+<apex:inputCheckbox label="Inline" onchange="alert(this.checked)"/>
+                        <script>
+                           //hide kbButtons on the iframe after 500 ms
+                           var lastId=null;
+                           function zSendMessage(msg,zpId) { //TODO try catch for timing
+                               //the first iframe holds the attachment but the 2nd has the envelope iframe - build the iframe!
+                               var o = document.getElementsByTagName('iframe')[0]; //ERS170322 TODO better to use id
+                               if (o && o.src) {
+                                   window.console.log(o.src+" has the attachment iframe");
+                                   if (lastId != zpId && src.indexOf(zpId) == -1) alert("This PDF may need to be updated.");
+                                   o.contentWindow.postMessage(msg,"https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}"); //TODO use custom setting
+                                   lastId=zpId;
+                               } else { alert("No o"); }
+                           }
+                           window.setTimeout('zSendMessage("hide-kbButtons")',1000);
+                        </script>
+                        Last zID was {!Case.ZPAPER__receivedId__c}
+</apex:form>
+<iframe id="zViewer" height="500" width="100%" src="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/SF_find.jsp?go=SF_files.jsp&dbID=000046b4X1bdf49375&hide=label&BATES0={!Case.Id},{!Case.Contact.Id},{!Case.Account.Id}&SFserver={!$Api.Partner_Server_URL_310}&SFsession={!$Api.Session_ID}"></iframe>
+</apex:page>

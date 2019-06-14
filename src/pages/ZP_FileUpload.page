@@ -1,0 +1,72 @@
+<apex:page controller="ZP_FileUploadController" id="ZP_FileUpload" docType="html-5.0">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script>
+        //Receive message from LC
+        window.addEventListener("message", function (event) {
+            data = event.data;
+
+            if (typeof(event.data.uploadFile) !== 'undefined' && (event.data.uploadFile === true)) {
+                if (event.data.propValue) {
+                    document.getElementById('{!$Component.theForm.propSelected}').value = event.data.propValue;
+                }
+                if (event.data.template) {
+                    document.getElementById('{!$Component.theForm.template}').value = event.data.template;
+                }
+                document.getElementById('{!$Component.theForm.uploadFileButton}').click();
+            }
+        }, false);
+
+        var lexOrigin = 'https://{!$CurrentPage.parameters.lcHost}';
+
+        //Data for Google map
+        var data;
+
+        //Send message to LC
+        function sendToLC(message) {
+            debugger;
+            // lexOrigin = parent.location.href;
+            if (typeof(lexOrigin) !== 'undefined') {
+                parent.parent.postMessage(message, lexOrigin);
+            }
+        }
+
+        sendToLC({
+            'state': 'LOADED',
+            'vfHost': "{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))}"
+        });
+
+    </script>
+
+    <apex:form id="theForm">
+        <apex:commandButton value="Save" action="{!uploadFile}" id="uploadFileButton"
+                            style="display:none;"/>
+        <apex:inputfile id="fileSelectedForUpload"
+                        onChange="sendToLC({'state': 'uploadFileSelected'});"
+                        value="{!objAttachment.body}" filename="{!objAttachment.Name}"
+                        size="{!objAttachment.BodyLength}"
+                        contentType="{!objAttachment.ContentType}" />
+        <apex:inputHidden id="propSelected" value="{!propSelected}"/>
+        <apex:inputHidden id="template" value="{!template}"/>
+    </apex:form>
+
+    <apex:pageBlock rendered="{!fileUploadProcessed == true}" id="theBlock">
+        <script>
+            //Hide pageBlock as we just need it to run <script>
+            var theBlock = document.getElementById('{!$Component.theBlock}');
+            theBlock.style.border = 'none';
+            theBlock.style.display = 'none';
+
+            //Send file uploaded message
+            sendToLC({
+                'state': 'fileUploadprocessed',
+                'message': '{!message}',
+                'messageType': '{!messageType}'
+            });
+        </script>
+    </apex:pageBlock>
+
+</apex:page>

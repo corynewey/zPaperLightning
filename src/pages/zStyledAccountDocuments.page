@@ -1,0 +1,9 @@
+<apex:page standardController="Account" sidebar="false" showHeader="false">
+<!-- script src="https://demo.zpaper.com/kb/jsp/tableXMLSearch.jsp?sfIds={!Referral__c.Id},{!Referral__c.Patient_Name__r.Id},{!Referral__c.Medical_Practice__r.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script -->
+<script src="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/tableXMLSearch.jsp?sfIds={!Account.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script>
+<script>
+var thisType="Referral:a0D";
+theType="Account:001";
+</script>
+<c:zLDSDocumentSet /> 
+</apex:page>

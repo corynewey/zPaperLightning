@@ -1,0 +1,35 @@
+<aura:component description="ZP_DocumentSet"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction"
+                access="global"
+                controller="ZP_DocumentSetController">
+<!--<aura:component description="ZP_DocumentSet"-->
+                <!--implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId"-->
+                <!--access="global"-->
+                <!--controller="ZP_DocumentSetController">-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="ZPEventDocSet" event="c:ZP_Event_DocumentSet" action="{!c.handleComponentEvent}"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="zPDocuments" type="String" access="global"/>
+    <aura:attribute name="DesignLayout" type="String" access="global"/>
+    <aura:attribute name="VScrolling" default="Yes" type="String" access="global"/>
+    <aura:attribute name="zheight" default="235" type="String" access="global"/>
+    <aura:attribute name="zSearchURL" default="https://{ZP_SERVER}/kb/jsp/tableXMLSearch.jsp?SFuser={SF_USERNAME}&amp;sfIds={SF_IDLIST}&amp;mode=JSON&amp;fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&amp;BATESq=X_attachedTo%20like%20^*SFID*^&amp;SFserver={SF_SERVER}&amp;SFsession={SF_SESSION}" type="String" access="global"/>
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="namespacePrefix" type="String"/>
+
+    <!--<script type="text/javascript">(function() {var walkme = document.createElement('script'); walkme.type = 'text/javascript'; walkme.async = true; walkme.src = 'https://cdn.walkme.com/users/f0564bbda1ec42728b7e363d879aaa75/test/walkme_f0564bbda1ec42728b7e363d879aaa75_https.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(walkme, s); window._walkmeConfig = {smartLoad:true}; })();</script>
+    -->
+    <ltng:require scripts="{!$Resource.walkMeInitScript_js}" />
+
+    <div style="width:100%;overflow-x:auto;min-height:100px;">
+        <div class="slds-theme_error" aura:id="errorPanel" style="display:none;padding:6px;">
+            <div class="slds-box" aura:id="errorBox">An error occurred.</div>
+        </div>
+        {!v.body}
+        <!-- Can't do it this way because this gets rendered before the doInit() function is done -->
+        <!--<c:ZP_DocumentSetStatusTable zPDocumentsObj="{!v.zPDocuments}" recordId="{!recordId}" />-->
+        <!--<table class="slds-table slds-table&#45;&#45;bordered slds-max-medium-table&#45;&#45;stacked" style="position:relative;height:100%;">-->
+            <!--{!v.body}-->
+        <!--</table>-->
+    </div>
+</aura:component>

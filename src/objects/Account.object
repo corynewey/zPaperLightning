@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>CallHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EmailHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnableCustomerPortalUser</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ListClean</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SmsHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewCustomerPortalUser</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>WebsiteHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <fields>
+        <fullName>AccountNumber</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>AccountSource</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Active__c</fullName>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AnnualRevenue</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>BillingAddress</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>CleanStatus</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>CustomerPriority__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Priority</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>DandbCompanyId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>DunsNumber</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Fax</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Industry</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Jigsaw</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>NaicsCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>NaicsDesc</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>NumberOfEmployees</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>NumberofLocations__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Locations</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Ownership</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ParentId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Phone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Rating</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SLAExpirationDate__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Expiration Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SLASerialNumber__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Serial Number</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Gold</fullName>
+                    <default>false</default>
+                    <label>Gold</label>
+                </value>
+                <value>
+                    <fullName>Silver</fullName>
+                    <default>false</default>
+                    <label>Silver</label>
+                </value>
+                <value>
+                    <fullName>Platinum</fullName>
+                    <default>false</default>
+                    <label>Platinum</label>
+                </value>
+                <value>
+                    <fullName>Bronze</fullName>
+                    <default>false</default>
+                    <label>Bronze</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ShippingAddress</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Sic</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>SicDesc</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Site</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>TickerSymbol</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Tradestyle</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>UpsellOpportunity__c</fullName>
+        <externalId>false</externalId>
+        <label>Upsell Opportunity</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Maybe</fullName>
+                    <default>false</default>
+                    <label>Maybe</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Website</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>YearStarted</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__FaxEmailValue__c</fullName>
+        <deprecated>false</deprecated>
+        <description>//ERS150226 empty field handling #18867</description>
+        <externalId>false</externalId>
+        <formula>if( LEN(Fax) &lt; 10, &quot;&quot; , substitute(substitute(substitute(substitute(Fax,&quot;-&quot;,&quot;&quot;),&quot;(&quot;,&quot;&quot;),&quot;)&quot;,&quot;&quot;),&quot; &quot;,&quot;&quot;) + &quot;.&quot; + CASESAFEID($Organization.Id) + &quot;.&quot; + CASESAFEID(Id) + &quot;@mfb.zpaper.com&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Fax Email Value</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__FaxEmail__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Fax Email</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__faxType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>document type and other identifying codes</description>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__latestFax__c</fullName>
+        <deprecated>false</deprecated>
+        <description>time when the more recent fax arrives</description>
+        <externalId>false</externalId>
+        <label>Latest Document</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__newFax__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>will be checked when a new fax arrives</description>
+        <externalId>false</externalId>
+        <label>New Document</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__outboundFaxTemplate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>holds the myFormBin ID for controlling the merge</description>
+        <externalId>false</externalId>
+        <label>Outbound Template</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__producedId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Most recent document sent out for delivery.</description>
+        <externalId>false</externalId>
+        <label>producedId</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__receivedId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>receivedId</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxAt__c</fullName>
+        <deprecated>false</deprecated>
+        <description>when the fax was sent</description>
+        <externalId>false</externalId>
+        <label>Sent Document At</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <description>delivery details</description>
+        <externalId>false</externalId>
+        <label>Sent Document Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFaxTo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>destination email or phone</description>
+        <externalId>false</externalId>
+        <label>Sent Document To</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZPAPER__sentFax__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>indicates a fax has be sent but the sentFaxStatus will hold the delivery information</description>
+        <externalId>false</externalId>
+        <label>Sent Document</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <listViews>
+        <fullName>AllAccounts</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All Accounts</label>
+    </listViews>
+    <listViews>
+        <fullName>MyAccounts</fullName>
+        <filterScope>Mine</filterScope>
+        <label>My Accounts</label>
+    </listViews>
+    <listViews>
+        <fullName>NewLastWeek</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_WEEK</value>
+        </filters>
+        <label>New Last Week</label>
+    </listViews>
+    <listViews>
+        <fullName>NewThisWeek</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>New This Week</label>
+    </listViews>
+    <listViews>
+        <fullName>PlatinumandGoldSLACustomers</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Platinum and Gold SLA Customers</label>
+    </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.ADDRESS1_CITY</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.PHONE1</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CORE.USERS.ALIAS</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.TYPE</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.PHONE1</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Billing</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>true</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>true</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Billing</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>true</showsLocation>
+        <showsStatus>true</showsStatus>
+        <url>http://www.genwatt.com/genwatt/billing.htm?actname={!Account_Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__massSend</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mass Send</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>var records = {!GETRECORDIDS($ObjectType.Account)};
+var sfType=&quot;Account&quot;;
+var kbHost = &quot;https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}&quot;;
+
+if (records[0] == null || records.length &lt; 2) {
+alert(&quot;Please select at least two rows&quot;);
+} else {
+var myForm = document.createElement(&quot;form&quot;)
+myForm.setAttribute(&quot;method&quot;, &quot;POST&quot;);
+myForm.setAttribute(&quot;action&quot;, kbHost+&quot;/kb/jsp/massFaxBin.jsp&quot;);
+
+var myInput = document.createElement(&quot;input&quot;) ;
+myInput.setAttribute(&quot;name&quot;, &quot;SFserver&quot;) ;
+myInput.setAttribute(&quot;value&quot;,&quot;{!$Api.Partner_Server_URL_310}&quot;);
+myForm.appendChild(myInput);
+
+myInput = document.createElement(&quot;input&quot;) ;
+myInput.setAttribute(&quot;name&quot;, &quot;SFsession&quot;) ;
+myInput.setAttribute(&quot;value&quot;,&quot;{!$Api.Session_ID}&quot;);
+myForm.appendChild(myInput);
+
+myInput = document.createElement(&quot;input&quot;) ;
+myInput.setAttribute(&quot;name&quot;, &quot;SFtype&quot;) ;
+myInput.setAttribute(&quot;value&quot;,sfType);
+myForm.appendChild(myInput);
+
+myInput = document.createElement(&quot;input&quot;) ;
+myInput.setAttribute(&quot;name&quot;, &quot;sfIDs&quot;) ;
+myInput.setAttribute(&quot;value&quot;,records.toString());
+//alert(records.toString());
+myForm.appendChild(myInput);
+
+document.body.appendChild(myForm) ;
+myForm.submit() ;
+document.body.removeChild(myForm) ;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ZPAPER__zPaperFax</fullName>
+        <availability>online</availability>
+        <description>Generic coversheet and other utilities.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>zPaper:Fax</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/SF_createCover.jsp?SForg={!Organization.Id}&amp;cover=SFbareFax&amp;SFtype=Account&amp;pages=,1,&amp;prompt=Done&amp;BATES=SA-{!Account.Id}&amp;SFuser={!User.Username}&amp;info={!Account.Name}@160,350:!KBC@r40,60:!{!Account.Id}@r530,40&amp;SFsession={!API.Session_ID}&amp;X_fax={!Account.Fax}</url>
+    </webLinks>
+</CustomObject>

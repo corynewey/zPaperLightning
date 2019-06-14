@@ -1,0 +1,146 @@
+<apex:component >
+   
+ <style>
+  td {
+      font-size: 8pt;
+  }
+  th.rotate > div > span {
+      font-size: 8pt;
+  }
+
+        th.rotate0 > div > span {
+            -ms-transform:rotate(315deg);
+            -moz-transform:rotate(315deg);
+            -webkit-transform:rotate(315deg);
+            -o-transform:rotate(315deg);
+            transform:rotate(315deg);
+            text-align: left;
+            display: block;
+        }
+</style>
+
+
+<script>
+//ERS170422 testing with pendo #35870
+if (1 === 0) {
+    (function (p, e, n, d, o) {
+        var v, w, x, y, z;
+        o = p[d] = p[d] || {};
+        o._q = [];
+        v = ['initialize', 'identify', 'updateOptions', 'pageLoad'];
+        for (w = 0, x = v.length; w < x; ++w) (function (m) {
+            o[m] = o[m] || function () {
+                o._q[m === v[0] ? 'unshift' : 'push']([m].concat([].slice.call(arguments, 0)));
+            };
+        })(v[w]);
+        y = e.createElement(n);
+        y.async = !0;
+        y.src = 'https://cdn.pendo.io/agent/static/73be4c48-de12-4297-63e4-2d862dce84d3/pendo.js';
+        z = e.getElementsByTagName(n)[0];
+        z.parentNode.insertBefore(y, z);
+    })(window, document, 'script', 'pendo');
+//end pendo but initialized within AJAX call
+
+}
+
+function writeRow(f,mode) {
+  if (!mode) mode="view";
+  document.write("<tr class='slds-text-title--caps'>");
+  var i=0;
+  for (i=0; i<states.length; i++) {
+    var v=states[i];
+    var c="";
+    if (f.X_reviews.indexOf(v+" by")>-1) c=" checked title=\""+f.X_reviews+"\" ";
+      document.write("<td scope='col'><div class='slds-truncate'><span class='slds-checkbox'><input type='checkbox' readOnly='readOnly' onclick='return false' "+c+" id='cb"+v+"'><label class='slds-checkbox__label' for='checkbox-146'><span class='slds-checkbox--faux'"+c+"/></label></span></div></td>"); //ERS150321 readOnly, return false
+  }
+  var d=Date(f.modified); //"modified" : "2015-03-21 20:49:36.0",
+  if (mode=="missing") d="&nbsp;"; //ERS150323
+  else d=f.modified.substring(0,16); //ERS150323 TODO use the Date()
+  var dt=unescape(f.X_docType)+""; if ((dt+"")=="&nbsp;" || dt.indexOf("&")==0) dt=""; //alert(dt);
+  if (1==0 || dt=="") {//ERS150321 form with BATES like APP_Form
+      var stillMissing=types.split(","); //ERS150322 stillMissing is really misnamed since there can be more than one APP per record
+      for (i=0; i<stillMissing.length; i++) {
+          if (stillMissing[i] != "" && f.BATES.indexOf(stillMissing[i].replace("*","")+"_Form")>-1) {
+              dt=stillMissing[i].replace("*","");
+              i=100;
+          }
+      }
+      f.X_docType=dt;
+      //alert("'"+f.X_docType +"' BATES="+f.BATES + " from "+ missingTypes);
+  }
+  if (f.BATES.indexOf("_Form")>-1) {
+      var la=f.label; la=la.substring(1+la.indexOf("-"),la.indexOf("_")); f.label=la;
+  }
+  document.write("<td scope='col'><div class='slds-truncate'>"+dt+"</div></td><td scope='col'><div class='slds-truncate'>"+d.toLocaleString().substring(0,21)+"</div></td><td scope='col'><div class='slds-truncate'>"+f.View+" - "+f.label+"</div></td></tr>");
+  if (dt != "" && mode != "missing") missingTypes=missingTypes.replace(dt+"*,","").replace(dt+",","");
+}
+
+
+
+
+var recordTypes=zFiles.crmTypes.split(",");
+if (!thisType) thisType="Case:500"; //ERS141115 TODO get from SF //ERS150321 define on VF page
+for (i in recordTypes) {
+  if (recordTypes[i].indexOf(":"+zFiles.sfId.substring(0,3))!=-1) thisType=recordTypes[i].replace("ZPAPER3","").replace("__c","").replace("__","");
+}
+thisType=thisType.substring(0,thisType.indexOf(":"));
+//alert("thisType="+thisType);
+
+var allTypes=zFiles.docTypes.split(",");
+var types=",";
+for (i in allTypes) {
+   var parts=allTypes[i].split(":");
+   if (parts[0]==thisType || parts[0]==(thisType+"__c")) { //ERS150321 __c
+      var req=""; if (parts[2].indexOf("*")>-1) req="*"; //ERS150321
+      types+=parts[1]+req+",";
+   }
+}
+var missingTypes=types;
+
+var states=zFiles.docStates.split(",");
+document.write("<table class='slds-table slds-table--bordered slds-table--cell-buffer'><thead><tr class='slds-text-title--caps'>");
+for (i=0; i<states.length; i++) {
+document.write("<th class='rotate' scope='col'><div class='slds-truncate'><span>"+states[i]+"</span></div></th>");
+}
+document.write("<th scope='col'><div class='slds-truncate'><span>Type</span></div></th><th><div class='slds-truncate'><span>Updated</span></div></th><th align='left'><div class='slds-truncate'><span>Form</span></div></th></tr></thead><tbody>");
+for (j=0; j<zFiles.files.length; j++) {
+   writeRow(zFiles.files[j]);
+}
+
+//alert(missingTypes);
+var tmpFile={"X_docType":"fax","label":"","modified":"","X_reviews":"","View":"","BATES":""};
+var missing=missingTypes.split(",");
+for (var j=0; j<missing.length; j++) {
+  if (missing[j].length > 1) {
+   var label="This is not required";
+   if (missing[j].indexOf("*")!=-1) label="This is required.";
+   //alert(missing[j]+" "+label);
+   tmpFile.X_docType=missing[j];
+   tmpFile.label=label;
+   writeRow(tmpFile,"missing"); //ERS150321 added missing
+  }
+}
+document.write("<tbody></table>");
+if (missing.length == 0 ) document.write("<li>All known document types are present.</li>");
+else if (missingTypes.indexOf("*")==-1) document.write("<li>All required document types are present.</li>");
+else document.write("<li>"+missingTypes+" types are missing.</li>");
+
+if (1==1) { //ERS170422 #35870
+  pendo.initialize({
+    apiKey: '73be4c48-de12-4297-63e4-2d862dce84d3',
+
+    visitor: {
+      id:              '{!$User.userName}',   // Required if user is logged in
+      email:           '{!$User.email}',
+      role:            'Lightning'
+    },
+
+    account: {
+      id:           '{!$Organization.Id}', // Highly recommended
+      name:         '{!$Organization.Name}'
+    }
+  });
+}
+
+</script>
+</apex:component>

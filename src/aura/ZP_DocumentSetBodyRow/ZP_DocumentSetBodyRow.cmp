@@ -1,0 +1,105 @@
+<aura:component description="ZP_DocumentSetBodyRow" controller="ZP_DocumentSetBodyRowController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="ZPEventDocSet" type="c:ZP_Event_DocumentSet"/>
+    <aura:attribute name="zPDocumentsObj" type="Object" access="public"/>
+    <aura:attribute name="zpFile" type="Object" access="public"/>
+    <aura:attribute name="docType" type="String" access="public"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="viewLinkURL" type="String" access="public"/>
+    <aura:attribute name="viewLinkLabel" type="String" access="public"/>
+    <aura:attribute name="actionIsFirst" type="Boolean" default="false" access="private"/>
+    <aura:attribute name="actionIsLast" type="Boolean" default="false" access="private"/>
+
+    <!-- CRN180808 Case #50296 Suppress blank rows if the user has requested it -->
+    <aura:if isTrue="{!or(not(empty(v.zpFile)), not(v.zPDocumentsObj.suppressBlankEntries))}">
+    <tr>
+        <!-- CRN180404 Adding column "Delete" or "Detach" button -->
+        <!--<td>actionIsFirst = {!v.actionIsFirst}</td>-->
+        <aura:if isTrue="{!v.actionIsFirst}">
+            <td style="text-align:center;">
+                <aura:if isTrue="{!empty(v.zpFile)}">
+                    &nbsp;
+                    <aura:set attribute="else">
+                        <aura:iteration items="{!v.zPDocumentsObj.zActionButtons}" var="actionBtn" indexVar="index">
+    <!--
+    CRN180808 Case #50295
+    It looks like Salesforce has a bug in its iteration tag. In the controller, some action buttons might be removed (e.g. the button shouldn't be
+    rendered if certain stages are checked). It looks like the button is successfully removed but the max value of the iterator doesn't get updated
+    so we try to render a button even though we've gone past the end of the list of buttons. The <aura:if> checks to make sure we haven't gone
+    past the end of the list.
+    -->
+                            <!--<aura:if isTrue="{!lessthan(index, v.zPDocumentsObj.zActionButtons.length)}">-->
+                            <aura:if isTrue="{!not(actionBtn.doNotDisplay)}">
+                                <input type="button" name="{!index}" style="line-height:1.3em;"
+                                       class="slds-button slds-button_brand" value="{!actionBtn.label}" onclick="{!c.jsFireActionBtnEvent}"/>
+                            </aura:if>
+                        </aura:iteration>
+                    </aura:set>
+                </aura:if>
+            </td>
+        </aura:if>
+        <aura:iteration items="{!v.zPDocumentsObj.zDocStatusNew}" var="status">
+            <td style="text-align:center;">
+                <aura:if isTrue="{!status == 'Form'}">
+                    <!-- Displaying the Date column in the table -->
+                    <aura:if isTrue="{!empty(v.zpFile)}">
+                        This is not required.
+                        <aura:set attribute="else">
+                            <a onclick="{!c.jsFireEvent}">{!v.viewLinkLabel}</a>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!status == 'Updated Date'}">
+                            <!-- Displaying the Date column in the table -->
+                            <aura:if isTrue="{!empty(v.zpFile)}">
+                                <aura:set attribute="else">
+                                    {!v.zpFile.modified}
+                                </aura:set>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!status == 'Type'}">
+                                    <!-- Displaying the Type column in the table -->
+                                    {!v.docType}
+                                    <aura:set attribute="else">
+                                        <!-- Displaying a Status column in the table (checkbox) -->
+                                        <c:ZP_CheckBoxFromMapLookup zMap="{!v.zpFile.X_ReviewsMap}" zProperty="{!status}" />
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </td>
+        </aura:iteration>
+        <!--<td>actionIsLast = {!v.actionIsLast}</td>-->
+        <aura:if isTrue="{!v.actionIsLast}">
+            <td style="text-align:center;">
+                <aura:if isTrue="{!empty(v.zpFile)}">
+                    &nbsp;
+                    <aura:set attribute="else">
+                        <aura:iteration items="{!v.zPDocumentsObj.zActionButtons}" var="actionBtn" indexVar="index">
+    <!--
+    CRN180808 Case #50295
+    It looks like Salesforce has a bug in its iteration tag. In the controller, some action buttons might be removed (e.g. the button shouldn't be
+    rendered if certain stages are checked). It looks like the button is successfully removed but the max value of the iterator doesn't get updated
+    so we try to render a button even though we've gone past the end of the list of buttons. The <aura:if> checks to make sure we haven't gone
+    past the end of the list.
+    -->
+                            <!--<aura:if isTrue="{!lessthan(index, v.zPDocumentsObj.zActionButtons.length)}">-->
+                            <aura:if isTrue="{!not(actionBtn.doNotDisplay)}">
+                                <input type="button" name="{!index}" style="line-height:1.3em;"
+                                       class="slds-button slds-button_brand" value="{!actionBtn.label}" onclick="{!c.jsFireActionBtnEvent}"/>
+                            </aura:if>
+                        </aura:iteration>
+                    </aura:set>
+                </aura:if>
+            </td>
+        </aura:if>
+
+        <div aura:id="actionIconComponent">
+            <!-- Modal dialog holder -->
+                {!v.body}
+        </div>
+    </tr>
+    </aura:if>
+</aura:component>

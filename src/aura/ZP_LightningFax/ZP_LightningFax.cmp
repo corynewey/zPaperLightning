@@ -1,0 +1,15 @@
+<aura:component description="ZP_LightningFax" implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction">
+    <div class="slds-grid">
+        <div class="slds-col slds-grid_vertical slds-size_1-of-3">
+            <div class="slds-col slds-size_1-of-6 slds-border--top slds-border--left slds-border--right">
+                This is the calendar and search area
+            </div>
+            <div class="slds-col slds-size_5-of-6 slds-border--bottom slds-border--left slds-border--right">
+                This is the list of documents area
+            </div>
+        </div>
+        <div class="slds-col slds-size_2-of-3 slds-box--border">
+            This is the document viewer area
+        </div>
+    </div>
+</aura:component>

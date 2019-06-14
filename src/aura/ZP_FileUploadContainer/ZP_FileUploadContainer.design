@@ -1,0 +1,7 @@
+<design:component label="zPaper File Uploader">
+    <design:attribute name="frameWidth" label="Frame Width" description="Width of component area" />
+    <design:attribute name="frameHeight" label="Frame Height" description="Height of component area" />
+    <design:attribute name="uploadFileTemplate" label="Upload Filename Template" description="Template used to generate upload filename. Merge fields supported: {username}, {pickValue}, {recId}" />
+    <design:attribute name="picklistLabel" label="Extra Property Picklist Label" description="Label to display for property picklist" />
+    <design:attribute name="sfPicklist" label="Extra Property Picklist" description="Picklist that will be displayed to allow user to entery extra property to upload with file" />
+</design:component>

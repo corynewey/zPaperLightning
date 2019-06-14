@@ -1,0 +1,21 @@
+<apex:page standardController="Case" sidebar="false" showHeader="false">
+<!-- script src="https://demo.zpaper.com/kb/jsp/tableXMLSearch.jsp?sfIds={!Referral__c.Id},{!Referral__c.Patient_Name__r.Id},{!Referral__c.Medical_Practice__r.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script -->
+<script src="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/tableXMLSearch.jsp?sfIds={!Case.Id},{!Case.Account.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script>
+<script>
+var thisType="Referral:a0D";
+theType="Case:500";
+</script>
+<apex:variable var="uiTheme" value="classic2010Theme" rendered="{!$User.UIThemeDisplayed == 'Theme3'}">
+      <style>
+        table, th, td {
+           border: 1px solid black;
+        }
+      </style>
+      <c:zDocumentSet />
+</apex:variable>
+<apex:variable var="uiTheme" value="lightningDesktop" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">  
+    <apex:stylesheet value="/resource/SLDS/assets/styles/salesforce-lightning-design-system-vf.css" /> 
+    <link href="{!URLFOR($Resource.SLDS,'/styles/salesforce-lightning-design-system.css')}" rel="stylesheet" type="text/css" />
+    <c:zDocumentSet_ltng />
+</apex:variable>
+</apex:page>

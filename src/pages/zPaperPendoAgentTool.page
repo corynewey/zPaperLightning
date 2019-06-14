@@ -1,0 +1,26 @@
+<apex:page showHeader="false" sidebar="false" title="Pendo Agent">
+    <script>
+    //ERS170613 load the pendo tools 
+    
+    (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=[];
+  v=['initialize','identify','updateOptions','pageLoad'];for(w=0,x=v.length;w<x;++w)(function(m){
+  o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+  y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/73be4c48-de12-4297-63e4-2d862dce84d3/pendo.js';
+  z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+
+  pendo.initialize({
+    apiKey: '73be4c48-de12-4297-63e4-2d862dce84d3',
+
+    visitor: {
+        id:          '{!$User.Username}'  //'lightning@zpaper.com',   // Required if user is logged in
+        email:       '{!$User.Email}'  //'eric+lightning@zpaper.com',
+        role:        '{!$UserRole.Name}'  //'Lightning' 
+    },
+
+    account: {
+        id:         '{!$Organization.Id}'  // '00D41000000UDnk', // Highly recommended
+        name:       '{!$Organization.Name}'  //'zWilco'
+    }
+  });
+  </script> 
+</apex:page>

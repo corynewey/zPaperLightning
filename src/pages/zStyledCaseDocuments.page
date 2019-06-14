@@ -1,0 +1,25 @@
+<apex:page standardController="Case" sidebar="false" showHeader="false">
+<!-- script src="https://demo.zpaper.com/kb/jsp/tableXMLSearch.jsp?sfIds={!Referral__c.Id},{!Referral__c.Patient_Name__r.Id},{!Referral__c.Medical_Practice__r.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script -->
+<script src="https://{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}/kb/jsp/tableXMLSearch.jsp?sfIds={!Case.Id},{!Case.Account.Id}&mode=JSON&fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&BATESq=X_attachedTo%20like%20^*SFID*^&SFserver={!$Api.Partner_Server_URL_160}&SFsession={!$Api.Session_ID}"></script>
+<script>
+var thisType="Referral:a0D";
+theType="Case:500";
+</script>
+<style>
+    .ipadScroll { -webkit-overflow-scrolling:auto; }
+</style>
+<!--<c:ZPAPER5__zLDSDocumentSet zLayoutName="Case Incoming" zLayoutId="a0841000009G2LFAA0" />-->
+<!-- CRN170830 Adding paramaters used to build 'Complete Forms' button ***** -->
+<!--<c:ZPAPER5__zLDSDocumentSet  -- I get an error when I try to deploy using the ZPAPER5__ namespace (namespace length cannot exceed 15 chars) -->
+<div class="ipadScroll" style="height:200px;overflow-y:auto;">
+<c:zLDSDocumentSet zLayoutName="Case Incoming"
+        zZpaperServer="{!$Setup.ZPAPER__zpaper__c.ZPAPER__server__c}"
+        zSFId="{!Case.Id}"
+        zSFSErver="{!$Api.Partner_Server_URL_160}"
+        zSFSession="{!$Api.Session_ID}" />
+<!--
+<c:zLDSDocumentSet
+        zLayoutName="Case Incoming" />
+-->
+</div>
+</apex:page>

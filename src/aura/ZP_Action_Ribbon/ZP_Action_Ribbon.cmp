@@ -1,0 +1,38 @@
+<aura:component description="ZP_Action_Ribbon"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId"
+                access="global" controller="ZP_ActionRibbonController">
+<!--<aura:component description="ZP_Action_Ribbon" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="ZP_ActionRibbonController">-->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="namespacePrefix" type="String"/>
+    <aura:attribute name="recordId" type="Id" access="PUBLIC"/>
+    <aura:attribute name="actionIconsWrapper" type="Object[]" access="PUBLIC"/>
+    <aura:attribute name="actionIconsWrapperMap" type="MAP" access="PUBLIC"/>
+    <aura:attribute name="showForm" type="Boolean" default="false"/>
+    <aura:attribute name="noOfRows" type="Integer[]" access="PUBLIC"/>
+    <aura:attribute name="noOfColumns" type="Integer[]" access="PUBLIC"/>
+    <aura:attribute name="noOfItemsInARow" type="Integer" default="5" access="PUBLIC"/>
+    <aura:attribute name="iconAction" type="String"/>
+    <aura:attribute name="iconActionComponent" type="String"/>
+
+    <ltng:require scripts="{!$Resource.walkMeInitScript_js}" />
+
+    <div class="slds">
+        <aura:if isTrue="{! v.showForm}">
+            <ul class="slds-tabs--scoped__nav slds-p-vertical_xx-small" role="tablist">
+                <aura:iteration items="{!v.actionIconsWrapper}" var="icons" indexVar="i">
+                    <button value="{!icons.iconActionComponentAndAction}" name="{!icons.iconAction}" class="slds-tabs--scoped__item slds-button slds-button_icon slds-m-left--small" disabled="false" type="button" onclick="{!c.callActionComponent}">
+                        <lightning:icon iconName="{!icons.iconImage}" size="small" alternativeText="{!icons.iconLabel}" title="{!icons.iconLabel}"/>
+                    </button>
+                    <div class="slds-m-left--small"/>
+                </aura:iteration>
+            </ul>
+        </aura:if>
+    </div>
+
+    <div aura:id="actionIconComponent">
+            {!v.body}
+    </div>
+
+</aura:component>

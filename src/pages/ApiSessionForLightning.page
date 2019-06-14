@@ -1,0 +1,14 @@
+<!--
+ * zPaper Utilities. Contains utility methods that allow partner code to work with zPaper services.
+ *
+ * Update History
+ * Who          Date          Change
+ * =================================================================================================
+ * Cory         10/24/2017    Creation
+ -->
+
+<apex:page id="ApiSessionForLightning" contentType="application/json">
+    {
+        "apiSession" : "{!$Api.Session_ID}"
+    }
+</apex:page>

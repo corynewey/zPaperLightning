@@ -1,0 +1,6 @@
+<design:component label="zDocument Set">
+    <design:attribute name="DesignLayout" label="Design Layout Name"  description="Please provide the applicable Design Layout Id. You will get Design Layout Name from zDocument Properties Page"/>
+    <design:attribute name="VScrolling" label="Vertical Scrolling" datasource="Yes,No" description="Please select vertical scrolling"/>
+    <design:attribute name="zheight" default="235" label="Height" description="Please specify the Height(Ex: 250)"/>
+    <design:attribute name="zSearchURL" default="https://{ZP_SERVER}/kb/jsp/tableXMLSearch.jsp?SFuser={SF_USERNAME}&amp;sfIds={SF_IDLIST}&amp;mode=JSON&amp;fields=label,ID,BATES,View,created,modified,modifiedBy,X_reviewedStatus,X_docType,X_reviews&amp;BATESq=X_attachedTo%20like%20^*SFID*^&amp;SFserver={SF_SERVER}&amp;SFsession={SF_SESSION}" label="Search URL" description="Please specify zPaper Service URL that will perform search that fills the document list"/>
+</design:component>

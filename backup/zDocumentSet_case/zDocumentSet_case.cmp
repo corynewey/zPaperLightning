@@ -1,0 +1,21 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" controller="zDocumentSetCaseController">
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+   <aura:attribute name="zDocStatusNew" type="String[]" />
+   <aura:attribute name="recordId" type="Id" />
+   <aura:attribute name="DesignLayout" type="String" access="global"/>
+   <aura:attribute name="VScrolling" default="Yes" type="String" access="global"/>
+   <aura:attribute name="zheight" default="235" type="String" access="global"/>
+   <ltng:require scripts="/support/console/40.0/integration.js" />
+   <div style="overflow: auto;">
+     <div aura:id="docTableCont" style="{!'height:'+ (v.VScrolling == 'Yes' ? v.zheight+'px' : ' ' )}">      
+    </div>
+   </div>   
+    <div aura:id="missedDocs">   
+    </div>   
+   <!--<div><textarea class="debugText" style="width:120px;height:40px;"></textarea></div>  -->
+   <!-- ERS170615 iframe src="/apex/zPaperPendoAgentTool" width="1" height="1"/ -->
+    <span id="PendoContainer" >
+        <lightning:container aura:id="PendoApp"  src="{!$Resource.pendojs}"/>
+    </span> 
+    
+</aura:component>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <description>Pure Lightning component that allows users to upload multiple files at one shot.
+    </description>
+    <isExposed>true</isExposed>
+    <masterLabel>zPaper Multiple File Uploader</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="filenamePicklistLabel"
+                      label="Picklist Label"
+                      type="String"
+                      description="Label for the picklist values that user can choose from when uploading a file."
+                      placeholder="Enter label to show user..." />
+            <property name="filenamePicklist"
+                      label="Picklist Property"
+                      type="String"
+                      description="The picklist value that will be used in the upload filename for back-end routing purposes, etc. Must be of the form: SObjectType.Field (e.g. Account.Industry) and the field must of course be a picklist."
+                      placeholder="Enter picklist property to use..." />
+            <property name="filenameExtensionList"
+                      label="Supported File Type Extensions"
+                      type="String" default="*.*"
+                      description="Limit the file types that will be shown in the upload file picker dialog. Defaults to all types (*.*)."
+                      placeholder="*.pdf, *.png, *.txt, *.*" />
+            <property name="filenameTemplate"
+                      label="Upload Filename Template"
+                      required="true"
+                      type="String"
+                      description="Template used to generate upload filename. Supported merge fields: {username}, {pickValue}, {orgId}, {recId}, {timestamp}"
+                      default="{username}-lightningUpload-{recId}-" placeholder="{username}-lightningUpload{orgId}-{pickValue}-{recId}-" />
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="filenamePicklistLabel"
+                      label="Picklist Label"
+                      type="String"
+                      description="Label for the picklist values that user can choose from when uploading a file."
+                      placeholder="Enter label to show user..." />
+            <property name="filenamePicklist"
+                      label="Picklist Property"
+                      type="String"
+                      description="The picklist value that will be used in the upload filename for back-end routing purposes, etc. Must be of the form: SObjectType.Field (e.g. Account.Industry) and the field must of course be a picklist."
+                      placeholder="Enter picklist property to use..." />
+            <property name="filenameExtensionList"
+                      label="Supported File Type Extensions"
+                      type="String" default="*.*"
+                      description="Limit the file types that will be shown in the upload file picker dialog. Defaults to all types (*.*)."
+                      placeholder="*.pdf, *.png, *.txt, *.*" />
+            <property name="filenameTemplate"
+                      label="Upload Filename Template"
+                      required="true"
+                      type="String"
+                      description="Template used to generate upload filename. Supported merge fields: {username}, {pickValue}, {orgId}, {recId}, {timestamp}"
+                      default="{username}-lightningUpload-{recId}-" placeholder="{username}-lightningUpload{orgId}-{pickValue}-{recId}-" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

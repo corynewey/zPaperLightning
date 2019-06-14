@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Columns__c</fullName>
+        <deprecated>false</deprecated>
+        <description>1. Sequence of the columns will decide the pattern.
+2. Columns header should be separated by &quot;;&quot; semicolon</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1. Sequence of the columns will decide the pattern.
+2. Columns header should be separated by &quot;;&quot; semicolon</inlineHelpText>
+        <label>Columns</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>HDOT__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>HDOT</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ZdocumentProperties</label>
+    <visibility>Public</visibility>
+</CustomObject>

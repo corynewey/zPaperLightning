@@ -1,0 +1,56 @@
+<!--
+ - Created by User on 5/24/2019.
+ -->
+
+<!-- zPaper Multiple File Uploader -->
+<template>
+    <div class="slds-grid slds-wrap">
+<!--
+        <div data-id="msgPanel"
+             style="display:none;width:100%;height:162px;line-height:162px;text-align:center;background-color:lightskyblue;border:2px solid blue;border-radius:4px;font-weight:bold;color:blue;">
+        </div>
+-->
+        <div data-id="msgPanel" lwc:dom="manual"
+             style="display:none;width:100%;text-align:center;background-color:lightskyblue;border:2px solid blue;border-radius:4px;font-weight:bold;color:blue;">
+        </div>
+        <div data-id="bodyPanel" style="width:100%;">
+            <template if:true={filenamePicklist}>
+                <div class="slds-size--1-of-1">
+                    <!--                <lightning-combobox label={picklistPromptLabel}-->
+                    <!--                                    options={picklistEntries}-->
+                    <!--                                    onchange={picklistChange}-->
+                    <!--                                    value={picklistValue}></lightning-combobox>-->
+                    <label for="select-upload" class="slds-form-element__label">{filenamePicklistLabel}</label>
+                    <select class="slds-select zp-lightning-select" id="select-upload" onchange={picklistChange}>
+                        <option value="">-- Please Select --</option>
+                        <template for:each={picklistEntries} for:item="entryItem">
+                            <option key={entryItem.value} value={entryItem.value}>{entryItem.label}</option>
+                        </template>
+                    </select>
+                </div>
+            </template>
+            <div class="slds-size--1-of-1">
+                <lightning-input type="text"
+                                 value={filenamesToUpload}
+                                 label="File(s) to Upload"
+                                 name="filesToUpload"
+                                 disabled="disabled"></lightning-input>
+            </div>
+            <div class="slds-size--1-of-1">
+            </div>
+            <div class="slds-size--1-of-1">
+                <div style="float:left;">
+                    <lightning-input type="file"
+                                     label="Select File to Upload"
+                                     name="fileUploader"
+                                     multiple="multiple"
+                                     onchange={handleFileChange}
+                                     accept={acceptedFormats}></lightning-input>
+                </div>
+                <div style="float:right;padding-top:24px;">
+                    <lightning-button variant="brand" label="Upload" onclick={handleUpload}></lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

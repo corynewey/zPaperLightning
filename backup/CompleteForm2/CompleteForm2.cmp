@@ -1,0 +1,103 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <ltng:require styles="/resource/SLDS/assets/styles/salesforce-lightning-design-system-vf.css" />
+    <aura:attribute name="showItem" type="string[]"/>
+    <aura:attribute name="stages" type="String[]" default="Any,Open,Closed,Closed,Closed Won"/>
+    
+    
+    <aura:attribute name="ifmsrc" type="String"/>
+    
+    <div class="slds-grid">
+        <div class="slds-col slds-size--1-of-2 slds-medium-size--1-of-6 slds-large-size--6-of-12">
+            Select a form to preview <br/><br/>
+            
+            <lightning:button variant="brand" label="Produce Form" onclick="{!c.produceForm}" />
+            <lightning:button variant="brand" label="Send Form" onclick="{!c.myAction}" />
+            <lightning:button variant="brand" label="Print Form" onclick="{!c.myAction}" />
+            <br/><br/>
+            
+            
+            
+            <div>
+                <b>Preview and Send</b>
+                
+                <fieldset class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                            <input type="radio" id="radio-1" name="options" onchange="{!c.getMasterReferralForm}"/>
+                            <label class="slds-radio__label" for="radio-1">
+                                <span class="slds-radio--faux"></span>
+                                <span class="slds-form-element__label">Master Provider Referral Form 020416</span>
+                            </label>                        
+                        </span> <br/><br/>
+                        
+                        <span class="slds-radio">
+                            <input type="radio" id="radio-2" name="options" onchange="{!c.getzPapyrusEnrollmentForm}" />
+                            <label class="slds-radio__label" for="radio-2">
+                                <span class="slds-radio--faux"></span>
+                                <span class="slds-form-element__label">zPapyrus Enrollment Form SRF-SMN 2017ZP</span>
+                            </label>
+                        </span>
+                        
+                        <br/> <br/>
+                        <b>Data Capture</b> <br/><br/>
+                        
+                        None found.
+                        <br/><br/>
+                        <b>Coversheet</b> <br/><br/>
+                        <span class="slds-radio">
+                            <input type="radio" id="radio-3" name="options" onchange="{!c.getAZapplication_blackZP}"/>
+                            <label class="slds-radio__label" for="radio-3">
+                                <span class="slds-radio--faux"></span>
+                                <span class="slds-form-element__label">AZapplication_blackZP</span>
+                            </label>
+                        </span>
+                    </div>
+                </fieldset>
+            </div>        
+        </div>
+        
+        <div class="slds-col slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--6-of-12">
+            <div id = "img1" style="display:none;">
+                <img src="{!$Resource.CompleteFormMasterProvider}"/>
+            </div>
+            <div id="produceForm" >
+                <iframe width="800" height="600" style="border: 1px solid" src="{!v.ifmsrc}" />
+            </div>
+            
+            <div id = "img2" style="display:none;">
+                <img src="{!$Resource.CompleteFormzPapyrusEnrollment}"/>
+            </div>          
+            <div id = "img3" style="display:none;">
+                <img src="{!$Resource.AZapplication_blackZP}"/>
+            </div> 
+        </div>
+        
+        <div >
+            <!-- modal body starts here -->
+            <div tabindex="-1" aria-labelledby="header43" aria-hidden="false" id="newClientSectionId" role="dialog" class="slds-modal slds-fade-in-open" style="display:none;">
+                <div class="slds-backdrop slds-backdrop--open">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+                                <button class="slds-button slds-button--neutral" onclick="{!c.hideModal}">X</button>  
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="header43" class="slds-text-heading--medium">Modal Header</h2>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--medium">
+                            
+                           London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.
+                        </div>
+                        
+                        <div class="slds-modal__footer">
+                            <button class="slds-button slds-button--brand" onclick="{!c.hideModal}">Cancel</button>
+                            <button class="slds-button slds-button--brand">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="slds-button slds-button--neutral" onclick="{!c.showModal}">Open Modal</button>
+        </div>
+    </div>
+</aura:component>

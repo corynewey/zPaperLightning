@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="ZP_Event_FileUploadStatus" access="global">
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="severity" type="String" />
+</aura:event>

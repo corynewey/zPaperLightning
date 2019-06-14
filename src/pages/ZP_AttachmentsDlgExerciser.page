@@ -1,0 +1,18 @@
+<apex:page>
+    <script type="text/javascript">
+        function showAttach() {
+            debugger;
+            //CRN180813 It looks like Salesforce is tucking the VF page into another iFrame
+            // document.getElementById("attachFrame").contentWindow.document.getElementById("contentPane").contentWindow.postMessage("show_dlg", "*");
+            //document.getElementById("attachFrame").contentWindow.document.getElementById("contentPane").contentWindow.promptForAttachment();
+            // promptForAttachment("0014100001N8M2hAAF", "SRC_ZPAPER | SRC_SALESFORCE", function(selection) {
+            promptForAttachment("0014100001N8M2hAAF", "SRC_ZPAPER", function(selection) {
+                alert("@@@ User selected: " + selection);
+            });
+        }
+    </script>
+
+    <!--<iframe id="attachFrame" src="/apex/ZP_AttachmentsDlg" style="width:100px;height:100px;" ></iframe>-->
+    <apex:include pageName="ZP_AttachmentsDlg" ></apex:include>
+    <input type="button" value="Attach" onclick="showAttach()" />
+</apex:page>

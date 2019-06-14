@@ -1,0 +1,21 @@
+<apex:page renderAs="pdf" controller="MasterProviderReferralController" >
+    
+    
+    <apex:image value="{!$Resource.OnTrack}" />
+    
+    <html>
+        <u><b>OnTrack Referral</b></u>
+        <br/>
+        <br/>
+        Date :
+        <br/><br/>
+       
+        Name : 
+        <br/>
+        First name:
+        <input type="text" name="firstname" value="Mickey"/>
+        <br/>
+        
+        
+    </html>
+</apex:page>
